@@ -44,7 +44,7 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 		rows := xlsx.GetRows(sheet1Name)
 
 		for i := range rows {
-			if i < 6 || xlsx.GetCellValue(sheet1Name, fmt.Sprintf("G%d", i)) != "" {
+			if i < 6 {
 				continue
 			}
 
@@ -62,6 +62,7 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 
 			// Assuming columns "A" and "B" for this example
 			so := dto.RequestContainer{
+				OrderDate: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i))[6:10] + "-" + xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i))[3:5] + "-" + xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i))[0:2],
 				InvoiceNo: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i)),
 				Sku:       xlsx.GetCellValue(sheet1Name, fmt.Sprintf("K%d", i)),
 				Qty:       qty,
@@ -101,6 +102,7 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 
 			// Assuming columns "A" and "B" for this example
 			so := dto.RequestContainer{
+				OrderDate: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("J%d", i))[0:10],
 				InvoiceNo: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i)),
 				Sku:       xlsx.GetCellValue(sheet1Name, fmt.Sprintf("O%d", i)),
 				Qty:       qty,

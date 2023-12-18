@@ -9,6 +9,7 @@ import (
 
 type SbsUsecase interface {
 	GetSbsProduct(c context.Context) *response.ResponseContainer
+	GetSo(c context.Context, filter dto.RequestSo) *response.ResponseContainer
 	PostSo(c context.Context, marketplace string, req []dto.RequestContainer) *response.ResponseContainer
 	Ping() string
 }

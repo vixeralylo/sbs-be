@@ -13,6 +13,7 @@ type SbsProduct struct {
 
 type SbsSalesOrder struct {
 	MarketPlaceId    string  `json:"marketplace_id" gorm:"column:marketplace_id;primary_key;"`
+	OrderDate        string  `json:"order_date" gorm:"column:order_date;primary_key;"`
 	InvoiceNo        string  `json:"invoice_no" gorm:"column:invoice_no;primary_key;"`
 	Sku              string  `json:"sku" gorm:"column:sku;primary_key;"`
 	ProductName      string  `json:"product_name" gorm:"column:product_name;"`

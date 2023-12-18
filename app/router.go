@@ -21,6 +21,7 @@ func InitRouter(
 
 	svc := router.Group("/")
 	svc.GET("/product", sbsDelivery.GetSbsProduct)
+	svc.GET("/so", sbsDelivery.GetSo)
 	svc.POST("/so", sbsDelivery.PostSo)
 
 	router.NoRoute(sbsDelivery.NoRoute)

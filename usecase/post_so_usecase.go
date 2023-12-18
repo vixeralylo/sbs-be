@@ -42,13 +42,14 @@ func (usecase *sbsUsecase) PostSo(c context.Context, marketplace string, req []d
 
 		salesOrder := entity.SbsSalesOrder{
 			MarketPlaceId:    marketplace,
+			OrderDate:        saleOrder.OrderDate,
 			InvoiceNo:        saleOrder.InvoiceNo,
 			Sku:              saleOrder.Sku,
 			ProductName:      productById[0].ProductName,
 			Qty:              saleOrder.Qty,
 			SalesPrice:       saleOrder.Price,
 			TotalPrice:       totalPrice,
-			Hpp:              hpp,
+			Hpp:              hpp * saleOrder.Qty,
 			GrossMargin:      grossMargin,
 			PowerMerchantFee: pwMerchantFee,
 			OngkirFee:        ongkirFee,
