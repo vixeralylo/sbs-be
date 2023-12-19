@@ -13,3 +13,15 @@ type RequestSo struct {
 	StartDate     string `json:"start_date" validate:"required"`
 	EndDate       string `json:"end_date" validate:"required"`
 }
+
+type RequestPo struct {
+	PoNumber    string  `json:"po_number" validate:"required"`
+	PoDate      string  `json:"po_date" validate:"required"`
+	Sku         string  `json:"sku" validate:"required"`
+	ProductName string  `json:"product_name"`
+	Qty         int     `json:"qty"`
+	Price       float64 `json:"price"`
+	Discount    float64 `json:"discount"`
+	Ppn         float64 `json:"ppn"`
+	TotalPrice  float64 `json:"total_price"`
+}

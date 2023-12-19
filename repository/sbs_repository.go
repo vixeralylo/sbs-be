@@ -15,6 +15,7 @@ type SbsRepository interface {
 	UpdateSbsProduct(c context.Context, sku string, qty int) error
 	GetSo(c context.Context, filter dto.RequestSo) ([]entity.SbsSalesOrder, error)
 	PostSo(c context.Context, salesOrder entity.SbsSalesOrder) error
+	PostPo(c context.Context, purchasesOrder entity.SbsPurchaseOrder) error
 }
 
 type sbsRepository struct {

@@ -13,6 +13,7 @@ type SbsDelivery interface {
 	GetSbsProduct(c *gin.Context)
 	GetSo(c *gin.Context)
 	PostSo(c *gin.Context)
+	PostPo(c *gin.Context)
 	NoRoute(c *gin.Context)
 }
 

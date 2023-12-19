@@ -44,17 +44,17 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 		rows := xlsx.GetRows(sheet1Name)
 
 		for i := range rows {
-			if i < 6 {
+			if i+1 < 6 {
 				continue
 			}
 
-			qty, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("N%d", i)))
+			qty, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("N%d", i+1)))
 			if err != nil {
 				// ... handle error
 				panic(err)
 			}
 
-			price, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("Q%d", i)))
+			price, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("Q%d", i+1)))
 			if err != nil {
 				// ... handle error
 				panic(err)
@@ -62,9 +62,9 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 
 			// Assuming columns "A" and "B" for this example
 			so := dto.RequestContainer{
-				OrderDate: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i))[6:10] + "-" + xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i))[3:5] + "-" + xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i))[0:2],
-				InvoiceNo: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i)),
-				Sku:       xlsx.GetCellValue(sheet1Name, fmt.Sprintf("K%d", i)),
+				OrderDate: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i+1))[6:10] + "-" + xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i+1))[3:5] + "-" + xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i+1))[0:2],
+				InvoiceNo: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)),
+				Sku:       xlsx.GetCellValue(sheet1Name, fmt.Sprintf("K%d", i+1)),
 				Qty:       qty,
 				Price:     price,
 			}
@@ -84,17 +84,17 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 		rows := xlsx.GetRows(sheet1Name)
 
 		for i := range rows {
-			if i < 2 || xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i)) == "Batal" {
+			if i+1 < 2 || xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Batal" {
 				continue
 			}
 
-			qty, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("S%d", i)))
+			qty, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("S%d", i+1)))
 			if err != nil {
 				// ... handle error
 				panic(err)
 			}
 
-			price, err = strconv.Atoi(regexp.MustCompile(`[^a-zA-Z0-9 ]+`).ReplaceAllString(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("R%d", i)), ""))
+			price, err = strconv.Atoi(regexp.MustCompile(`[^a-zA-Z0-9 ]+`).ReplaceAllString(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("R%d", i+1)), ""))
 			if err != nil {
 				// ... handle error
 				panic(err)
@@ -102,9 +102,9 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 
 			// Assuming columns "A" and "B" for this example
 			so := dto.RequestContainer{
-				OrderDate: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("J%d", i))[0:10],
-				InvoiceNo: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i)),
-				Sku:       xlsx.GetCellValue(sheet1Name, fmt.Sprintf("O%d", i)),
+				OrderDate: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("J%d", i+1))[0:10],
+				InvoiceNo: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i+1)),
+				Sku:       xlsx.GetCellValue(sheet1Name, fmt.Sprintf("O%d", i+1)),
 				Qty:       qty,
 				Price:     price,
 			}

@@ -26,3 +26,15 @@ type SbsSalesOrder struct {
 	OngkirFee        float32 `json:"ongkir_fee" gorm:"column:ongkir_fee;"`
 	CleanMargin      float32 `json:"clean_margin" gorm:"column:clean_margin;"`
 }
+
+type SbsPurchaseOrder struct {
+	PoNumber    string  `json:"po_number" gorm:"column:po_number;primary_key;"`
+	PoDate      string  `json:"po_date" gorm:"column:po_date;primary_key;"`
+	Sku         string  `json:"sku" gorm:"column:sku;primary_key;"`
+	ProductName string  `json:"product_name" gorm:"column:product_name;"`
+	Qty         int     `json:"qty" gorm:"column:qty;"`
+	Price       float64 `json:"price" gorm:"column:price;"`
+	Discount    float64 `json:"discount" gorm:"column:discount;"`
+	Ppn         float64 `json:"ppn" gorm:"column:ppn;"`
+	TotalPrice  float64 `json:"total_price" gorm:"column:total_price;"`
+}

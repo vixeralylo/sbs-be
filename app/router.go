@@ -23,6 +23,7 @@ func InitRouter(
 	svc.GET("/product", sbsDelivery.GetSbsProduct)
 	svc.GET("/so", sbsDelivery.GetSo)
 	svc.POST("/so", sbsDelivery.PostSo)
+	svc.POST("/po", sbsDelivery.PostPo)
 
 	router.NoRoute(sbsDelivery.NoRoute)
 

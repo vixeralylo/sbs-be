@@ -14,7 +14,7 @@ import (
 
 func (delivery *sbsDelivery) GetSo(c *gin.Context) {
 	var filter dto.RequestSo
-	errBind := c.ShouldBind(&filter)
+	errBind := c.ShouldBindJSON(&filter)
 
 	validate := validator.New()
 	if errBind != nil && errors.Is(errBind, io.EOF) { // checking if body req is empty

@@ -32,7 +32,16 @@ func (usecase *sbsUsecase) PostSo(c context.Context, marketplace string, req []d
 		} else if err != nil {
 			return response.BuildInternalErrorResponse(constant.ERROR_CODE_DATABASE_ERROR, constant.RESPONSE_CODE_INTERNAL_ERROR, constant.RESPONSE_MESSAGE_DATABASE_ERROR, err.Error())
 		}
-		hpp := productById[0].Hpp
+
+		var hpp int
+		var productName string
+		if saleOrder.Sku == "" {
+			hpp = 0
+			productName = "Plastik Bubble/ Bubble Wrap Packing tambahan"
+		} else {
+			hpp = productById[0].Hpp
+			productName = productById[0].ProductName
+		}
 
 		totalPrice := saleOrder.Qty * saleOrder.Price
 		pwMerchantFee := pwMerchantPct * float32(totalPrice)
@@ -45,7 +54,7 @@ func (usecase *sbsUsecase) PostSo(c context.Context, marketplace string, req []d
 			OrderDate:        saleOrder.OrderDate,
 			InvoiceNo:        saleOrder.InvoiceNo,
 			Sku:              saleOrder.Sku,
-			ProductName:      productById[0].ProductName,
+			ProductName:      productName,
 			Qty:              saleOrder.Qty,
 			SalesPrice:       saleOrder.Price,
 			TotalPrice:       totalPrice,
@@ -60,14 +69,16 @@ func (usecase *sbsUsecase) PostSo(c context.Context, marketplace string, req []d
 		if errInsert != nil && errInsert.Error() == config.ErrRecordNotFound.Error() {
 			return response.BuildDataNotFoundResponse()
 		} else if errInsert != nil {
-			return response.BuildInternalErrorResponse(constant.ERROR_CODE_DATABASE_ERROR, constant.RESPONSE_CODE_INTERNAL_ERROR, constant.RESPONSE_MESSAGE_DATABASE_ERROR, err.Error())
+			return response.BuildInternalErrorResponse(constant.ERROR_CODE_DATABASE_ERROR, constant.RESPONSE_CODE_INTERNAL_ERROR, constant.RESPONSE_MESSAGE_DATABASE_ERROR, errInsert.Error())
 		}
 
-		errUpdate := usecase.SbsRepository.UpdateSbsProduct(c, saleOrder.Sku, saleOrder.Qty)
-		if errUpdate != nil && errUpdate.Error() == config.ErrRecordNotFound.Error() {
-			return response.BuildDataNotFoundResponse()
-		} else if errUpdate != nil {
-			return response.BuildInternalErrorResponse(constant.ERROR_CODE_DATABASE_ERROR, constant.RESPONSE_CODE_INTERNAL_ERROR, constant.RESPONSE_MESSAGE_DATABASE_ERROR, err.Error())
+		if saleOrder.Sku != "" {
+			errUpdate := usecase.SbsRepository.UpdateSbsProduct(c, saleOrder.Sku, saleOrder.Qty)
+			if errUpdate != nil && errUpdate.Error() == config.ErrRecordNotFound.Error() {
+				return response.BuildDataNotFoundResponse()
+			} else if errUpdate != nil {
+				return response.BuildInternalErrorResponse(constant.ERROR_CODE_DATABASE_ERROR, constant.RESPONSE_CODE_INTERNAL_ERROR, constant.RESPONSE_MESSAGE_DATABASE_ERROR, errUpdate.Error())
+			}
 		}
 
 	}
