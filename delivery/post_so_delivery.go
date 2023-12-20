@@ -15,7 +15,14 @@ import (
 )
 
 func (delivery *sbsDelivery) PostSo(c *gin.Context) {
-	marketplace := c.GetHeader("Marketplace")
+
+	err := c.Request.ParseMultipartForm(10 << 20)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Unable to parse form data"})
+		return
+	}
+
+	marketplace := c.PostForm("marketplace")
 	if marketplace == "" {
 		errResp := response.BuildBadRequestResponse(constant.ERROR_CODE_INVALID_HEADER_REQUEST, constant.RESPONSE_CODE_BAD_REQUEST, constant.RESPONSE_MESSAGE_INVALID_HEADER_REQ, "Tidak ada sumber marketplace")
 		c.JSON(http.StatusBadRequest, errResp)
@@ -28,18 +35,30 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 		return
 	}
 
+	file, err := c.FormFile("file")
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "File not found"})
+		return
+	}
+
+	// Save the uploaded file to a temporary location
+	uploadPath := "excel/" + file.Filename
+	if err := c.SaveUploadedFile(file, uploadPath); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save file"})
+		return
+	}
+
 	var saleOrders []dto.RequestContainer
 	var qty int
 	var price int
 
+	xlsx, err := excelize.OpenFile(uploadPath)
+	if err != nil {
+		log.Fatal("ERROR", err.Error())
+	}
+
 	//TOKOPEDIA
 	if marketplace == "Tokopedia" {
-
-		xlsx, err := excelize.OpenFile("./excel/tokopedia.xlsx")
-		if err != nil {
-			log.Fatal("ERROR", err.Error())
-		}
-
 		sheet1Name := "Laporan Penjualan"
 		rows := xlsx.GetRows(sheet1Name)
 
@@ -74,12 +93,6 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 
 	//SHOPEE
 	if marketplace == "Shopee" {
-
-		xlsx, err := excelize.OpenFile("./excel/shopee.xlsx")
-		if err != nil {
-			log.Fatal("ERROR", err.Error())
-		}
-
 		sheet1Name := "orders"
 		rows := xlsx.GetRows(sheet1Name)
 

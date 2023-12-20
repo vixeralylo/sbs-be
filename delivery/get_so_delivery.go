@@ -2,6 +2,7 @@ package delivery
 
 import (
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"sbs-be/model/constant"
@@ -15,6 +16,8 @@ import (
 func (delivery *sbsDelivery) GetSo(c *gin.Context) {
 	var filter dto.RequestSo
 	errBind := c.ShouldBindJSON(&filter)
+
+	fmt.Println(filter)
 
 	validate := validator.New()
 	if errBind != nil && errors.Is(errBind, io.EOF) { // checking if body req is empty

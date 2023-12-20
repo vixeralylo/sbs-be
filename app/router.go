@@ -2,6 +2,7 @@ package app
 
 import (
 	"sbs-be/delivery"
+	"sbs-be/middleware"
 	"sbs-be/repository"
 	"sbs-be/usecase"
 
@@ -18,6 +19,8 @@ func InitRouter(
 	sbsDelivery := delivery.GetSbsDelivery(sbsUsecase)
 
 	router := gin.Default()
+
+	router.Use(middleware.CORSMiddleware())
 
 	svc := router.Group("/")
 	svc.GET("/product", sbsDelivery.GetSbsProduct)

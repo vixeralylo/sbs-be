@@ -33,7 +33,7 @@ func (usecase *sbsUsecase) PostPo(c context.Context, req []dto.RequestPo) *respo
 			return response.BuildInternalErrorResponse(constant.ERROR_CODE_DATABASE_ERROR, constant.RESPONSE_CODE_INTERNAL_ERROR, constant.RESPONSE_MESSAGE_DATABASE_ERROR, errInsert.Error())
 		}
 
-		errUpdate := usecase.SbsRepository.UpdateSbsProduct(c, purchaseOrder.Sku, purchaseOrder.Qty)
+		errUpdate := usecase.SbsRepository.AddSbsProduct(c, purchaseOrder.Sku, purchaseOrder.Qty)
 		if errUpdate != nil && errUpdate.Error() == config.ErrRecordNotFound.Error() {
 			return response.BuildDataNotFoundResponse()
 		} else if errUpdate != nil {

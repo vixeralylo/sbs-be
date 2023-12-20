@@ -73,7 +73,7 @@ func (usecase *sbsUsecase) PostSo(c context.Context, marketplace string, req []d
 		}
 
 		if saleOrder.Sku != "" {
-			errUpdate := usecase.SbsRepository.UpdateSbsProduct(c, saleOrder.Sku, saleOrder.Qty)
+			errUpdate := usecase.SbsRepository.DeductSbsProduct(c, saleOrder.Sku, saleOrder.Qty)
 			if errUpdate != nil && errUpdate.Error() == config.ErrRecordNotFound.Error() {
 				return response.BuildDataNotFoundResponse()
 			} else if errUpdate != nil {
