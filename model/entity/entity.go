@@ -30,6 +30,7 @@ type SbsSalesOrder struct {
 	PowerMerchantFee float32 `json:"power_merchant_fee" gorm:"column:power_merchant_fee;"`
 	OngkirFee        float32 `json:"ongkir_fee" gorm:"column:ongkir_fee;"`
 	CleanMargin      float32 `json:"clean_margin" gorm:"column:clean_margin;"`
+	Flag             bool    `json:"flag" gorm:"column:flag;"`
 }
 
 type SbsPurchaseOrder struct {

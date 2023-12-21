@@ -36,3 +36,19 @@ func (repository *sbsRepository) GetSo(c context.Context, filter dto.RequestSo) 
 
 	return results, nil
 }
+
+func (repository *sbsRepository) GetSoById(c context.Context, orderId string) ([]entity.SbsSalesOrder, error) {
+
+	if c.Err() == context.DeadlineExceeded {
+		return nil, c.Err()
+	}
+
+	var results []entity.SbsSalesOrder
+
+	err := repository.mysqlConn.Where("invoice_no = ?", orderId).Where("flag is true").Find(&results).Limit(1).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return results, nil
+}

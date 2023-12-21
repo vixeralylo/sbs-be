@@ -5,10 +5,9 @@ import (
 	"log"
 	"net/http"
 	"regexp"
-	"sbs-be/model/constant"
 	"sbs-be/model/dto"
-	"sbs-be/model/response"
 	"strconv"
+	"strings"
 
 	"github.com/360EntSecGroup-Skylar/excelize"
 	"github.com/gin-gonic/gin"
@@ -22,23 +21,17 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 		return
 	}
 
-	marketplace := c.PostForm("marketplace")
-	if marketplace == "" {
-		errResp := response.BuildBadRequestResponse(constant.ERROR_CODE_INVALID_HEADER_REQUEST, constant.RESPONSE_CODE_BAD_REQUEST, constant.RESPONSE_MESSAGE_INVALID_HEADER_REQ, "Tidak ada sumber marketplace")
-		c.JSON(http.StatusBadRequest, errResp)
-		return
-	}
-
-	if marketplace != "Tokopedia" && marketplace != "Shopee" {
-		errResp := response.BuildBadRequestResponse(constant.ERROR_CODE_INVALID_HEADER_REQUEST, constant.RESPONSE_CODE_BAD_REQUEST, constant.RESPONSE_MESSAGE_INVALID_HEADER_REQ, "Marketplace harus Tokopedia atau Shopee")
-		c.JSON(http.StatusBadRequest, errResp)
-		return
-	}
-
 	file, err := c.FormFile("file")
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "File not found"})
 		return
+	}
+
+	var marketplace string
+	if strings.Contains(file.Filename, "Tokopedia") {
+		marketplace = "Tokopedia"
+	} else {
+		marketplace = "Shopee"
 	}
 
 	// Save the uploaded file to a temporary location

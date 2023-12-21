@@ -1,6 +1,6 @@
 sku,product_name,stock,hpp,price,brand_id,supplier_id,seq
 KSOY1,Kecap Asin Khas Jepang (Soy Sauce) 150 ml,34,15254,19500,,,1
-KSOY2,Kecap Asin Khas Jepang (Soy Sauce) dispenser 150 ml,29,15254,19500,,,2
+KSOY2,Kecap Asin Khas Jepang (Soy Sauce) dispenser 150 ml,28,15254,19500,,,2
 KSOY3,Kecap Asin Khas Jepang (Soy Sauce) jerigen 2L,16,103364,118500,,,3
 KSOY4,Kecap Asin Khas Jepang (Soy Sauce) jerigen 5L,17,199190,229000,,,4
 KSOY6,Kecap Asin Khas Jepang (Soy Sauce) 250 ml repack,20,6879,13000,,,5
@@ -36,15 +36,15 @@ MAS004,Enachan Shiro/White Miso Halal 1kg ,18,40360,49000,,,34
 MAS005,Mikochan Shiro/White Miso 300gr,14,21978,28500,,,35
 MAS006,Mikochan Shiro/White Miso 1 kg,15,40360,49000,,,36
 MAS077,(Steamed) Sanuki Udon Taikoban Mini-Double 200g,41,33467,43000,,,37
-MAS007,(Steamed) Sanuki Udon Taikoban Mini-Double 250g,45,36464,46000,,,38
-MAS008,(Steamed) Ramen Taikoban Mini-Double 200gr ,16,37463,47000,,,39
-MAS009,Dashi No Moto Bonito S-5,42,21706,29000,,,40
+MAS007,(Steamed) Sanuki Udon Taikoban Mini-Double 250g,44,36464,46000,,,38
+MAS008,(Steamed) Ramen Taikoban Mini-Double 200gr ,12,37463,47000,,,39
+MAS009,Dashi No Moto Bonito S-5,41,21706,29000,,,40
 MAS010,Kombudashi No Moto 56gr,0,29153,37000,,,41
 MAS073,"Yaki/Sushi Nori ""CN"" 10shts",0,26156,31500,,,42
 MAS011,"Yaki/Sushi Nori ""CN"" 50shts",17,79920,90500,,,43
 MAS012,Udon Soup,17,26674,40500,,,44
 MAS014,Pon Shabu 250ml,13,53946,67000,,,45
-MAS015,Goma Shabu 250ml,14,61139,75000,,,46
+MAS015,Goma Shabu 250ml,13,61139,75000,,,46
 MAS016,Mizkan Sesame Sauce Light ,3,57942,70000,,,47
 MAS017,Mizkan Aji Pon 360ml,0,54491,64000,,,48
 MAS018,Mizkan Suehiro/Kokumotsu Su Bottle 1.8lt,5,77650,93000,,,49
@@ -52,15 +52,15 @@ MAS019,Mizkan Suehiro/Kokumotsu Su Bottle 500ml,30,24975,36000,,,50
 MAS054,Ryorishu 400 ml,11,38598,46000,,,51
 MAS020,Gyoza/Dumpling Kawa/Wrap,23,16784,24000,,,52
 MAS021,Jun Mirin 1.8ltr,16,86096,101500,,,53
-MAS022,Hon Mirin 640 ml,20,44501,52000,,,54
+MAS022,Hon Mirin 640 ml,19,44501,52000,,,54
 MAS023,Mirin 320ml,17,26338,32000,,,55
 MAS024,Ryorishu 500 ml,21,37236,45000,,,56
 MAS067,"Goseishu 1,8ltr",4,86096,101000,,,57
 MAS025,Teriyaki Daioh 400 ml,9,38689,46000,,,58
-MAS026,Edamame Whole Non-Salted,47,16257,20000,,,59
+MAS026,Edamame Whole Non-Salted,46,16257,20000,,,59
 MAS027,Edamame Whole Salted,30,14531,18500,,,60
-MAS028,Welna Tempura-Ko 600gr,18,41232,49000,,,61
-MAS029,Hondashi 500gr,7,61802,71000,,,62
+MAS028,Welna Tempura-Ko 600gr,17,41232,49000,,,61
+MAS029,Hondashi 500gr,6,61802,71000,,,62
 MAS030,Hondashi 1kg,16,127872,145000,,,63
 MAS031,Sushi Gari Pink 100gr,14,4505,10000,,,64
 MAS032,Sushi Gari Pink 1kg,4,45046,60000,,,65
@@ -167,7 +167,7 @@ NIC014,sapi tidak pedas 200gr,15,15500,21000,,,165
 NIC015,sapi pedas sedang 200gr,2,15500,21000,,,166
 NIC016,sapi super pedas 200gr,5,15500,21000,,,167
 EMPTY9,,,,,,,168
-CJO001,[K23] 50GR DRIED SEAWEED,41,22540,28000,,,169
+CJO001,[K23] 50GR DRIED SEAWEED,39,22540,28000,,,169
 CJO002,[K24] 100GR DRIED SEAWEED,32,41362,49000,,,170
 CJO003,Beef galbi marinade 280g,31,20691,26000,,,171
 CJO004,Beef galbi marinade 500g,28,32089,39000,,,172

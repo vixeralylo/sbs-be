@@ -14,6 +14,7 @@ func (usecase *sbsUsecase) PostSo(c context.Context, marketplace string, req []d
 
 	var pwMerchantPct float32
 	var ongkirPct float32
+	var tempDistinct []string
 
 	if marketplace == "Tokopedia" {
 		pwMerchantPct = 0.045
@@ -26,6 +27,14 @@ func (usecase *sbsUsecase) PostSo(c context.Context, marketplace string, req []d
 
 	for _, saleOrder := range req {
 
+		//JIKA SUDAH ADA DI DB, INVOICENYA DI SKIP
+		orderbyId, _ := usecase.SbsRepository.GetSoById(c, saleOrder.InvoiceNo)
+		if len(orderbyId) == 0 {
+		} else {
+			continue
+		}
+
+		//CARI KE DB BUAT DAPETIN HPP NYA
 		productById, err := usecase.SbsRepository.GetSbsProductById(c, saleOrder.Sku)
 		if err != nil && err.Error() == config.ErrRecordNotFound.Error() {
 			return response.BuildDataNotFoundResponse()
@@ -81,6 +90,14 @@ func (usecase *sbsUsecase) PostSo(c context.Context, marketplace string, req []d
 			}
 		}
 
+		tempDistinct = append(tempDistinct, salesOrder.InvoiceNo)
+	}
+
+	errUpdateFlag := usecase.SbsRepository.UpdateSoFlag(c, tempDistinct)
+	if errUpdateFlag != nil && errUpdateFlag.Error() == config.ErrRecordNotFound.Error() {
+		return response.BuildDataNotFoundResponse()
+	} else if errUpdateFlag != nil {
+		return response.BuildInternalErrorResponse(constant.ERROR_CODE_DATABASE_ERROR, constant.RESPONSE_CODE_INTERNAL_ERROR, constant.RESPONSE_MESSAGE_DATABASE_ERROR, errUpdateFlag.Error())
 	}
 
 	return response.BuildSuccessResponse(nil)
