@@ -72,6 +72,7 @@ func (usecase *sbsUsecase) PostSo(c context.Context, marketplace string, req []d
 			PowerMerchantFee: pwMerchantFee,
 			OngkirFee:        ongkirFee,
 			CleanMargin:      cleanMargin,
+			IsPayment:        saleOrder.IsPayment,
 		}
 
 		errInsert := usecase.SbsRepository.PostSo(c, salesOrder)

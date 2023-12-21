@@ -6,6 +6,7 @@ type RequestContainer struct {
 	Sku       string `json:"sku"`
 	Qty       int    `json:"qty"`
 	Price     int    `json:"Price"`
+	IsPayment bool   `json:"is_payment"`
 }
 
 type RequestSo struct {

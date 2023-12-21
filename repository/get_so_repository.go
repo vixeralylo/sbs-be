@@ -45,7 +45,7 @@ func (repository *sbsRepository) GetSoById(c context.Context, orderId string) ([
 
 	var results []entity.SbsSalesOrder
 
-	err := repository.mysqlConn.Where("invoice_no = ?", orderId).Where("flag is true").Find(&results).Limit(1).Error
+	err := repository.mysqlConn.Where("invoice_no = ?", orderId).Where("flag is true").Find(&results).Error
 	if err != nil {
 		return nil, err
 	}

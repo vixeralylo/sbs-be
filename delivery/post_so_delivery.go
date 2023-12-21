@@ -72,6 +72,11 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 				panic(err)
 			}
 
+			isPayment := true
+			if xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Belum Bayar" {
+				isPayment = false
+			}
+
 			// Assuming columns "A" and "B" for this example
 			so := dto.RequestContainer{
 				OrderDate: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i+1))[6:10] + "-" + xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i+1))[3:5] + "-" + xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i+1))[0:2],
@@ -79,6 +84,7 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 				Sku:       xlsx.GetCellValue(sheet1Name, fmt.Sprintf("K%d", i+1)),
 				Qty:       qty,
 				Price:     price,
+				IsPayment: isPayment,
 			}
 			saleOrders = append(saleOrders, so)
 		}
@@ -106,6 +112,11 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 				panic(err)
 			}
 
+			isPayment := true
+			if xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Belum Bayar" {
+				isPayment = false
+			}
+
 			// Assuming columns "A" and "B" for this example
 			so := dto.RequestContainer{
 				OrderDate: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("J%d", i+1))[0:10],
@@ -113,6 +124,7 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 				Sku:       xlsx.GetCellValue(sheet1Name, fmt.Sprintf("O%d", i+1)),
 				Qty:       qty,
 				Price:     price,
+				IsPayment: isPayment,
 			}
 			saleOrders = append(saleOrders, so)
 		}
