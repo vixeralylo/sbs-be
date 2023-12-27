@@ -1,5 +1,9 @@
 package entity
 
+type SbsProductResponse struct {
+	SisaPersesiaan float64 `json:"sisa_persediaan"`
+	SbsProductList []SbsProduct
+}
 type SbsProduct struct {
 	Sku         string  `json:"sku" gorm:"column:sku;primary_key;"`
 	ProductName string  `json:"product_name" gorm:"column:product_name;"`
@@ -14,6 +18,17 @@ type SbsProduct struct {
 	Ongkir      float64 `json:"ongkir"`
 	CleanMargin float64 `json:"clean_margin"`
 	Pct         float64 `json:"pct"`
+}
+
+type SbsSalesOrderResponse struct {
+	SumPrice       int     `json:"sum_price"`
+	SumTotalPrice  float64 `json:"sum_total_price"`
+	SumHpp         float64 `json:"sum_hpp"`
+	SumMargin      float64 `json:"sum_margin"`
+	SumAdmin       float64 `json:"sum_admin"`
+	SumOngkir      float64 `json:"sum_ongkir"`
+	SumCleanMargin float64 `json:"sum_clean_margin"`
+	SbsOrderList   []SbsSalesOrder
 }
 
 type SbsSalesOrder struct {

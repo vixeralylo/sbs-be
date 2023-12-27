@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 	"math"
+	"strconv"
 
 	"sbs-be/config"
 	"sbs-be/model/constant"
@@ -13,7 +14,8 @@ import (
 func (usecase *sbsUsecase) GetSbsProduct(c context.Context) *response.ResponseContainer {
 
 	resultProduct, err := usecase.SbsRepository.GetSbsProduct(c)
-	var result []entity.SbsProduct
+	var productList []entity.SbsProduct
+	var sisaPersesiaan float64
 
 	for _, product := range resultProduct {
 		price := float64(product.Price)
@@ -22,6 +24,7 @@ func (usecase *sbsUsecase) GetSbsProduct(c context.Context) *response.ResponseCo
 		admin := 0.045 * price
 		ongkir := 0.04 * price
 		cleanMargin := gross - admin - ongkir
+		stock, _ := strconv.ParseFloat(product.Stock, 64)
 
 		var pct float64
 		if cleanMargin != 0 {
@@ -29,6 +32,8 @@ func (usecase *sbsUsecase) GetSbsProduct(c context.Context) *response.ResponseCo
 		} else {
 			pct = 0
 		}
+
+		sisaPersesiaan = sisaPersesiaan + (stock * hpp)
 
 		products := entity.SbsProduct{
 			Sku:         product.Sku,
@@ -43,7 +48,12 @@ func (usecase *sbsUsecase) GetSbsProduct(c context.Context) *response.ResponseCo
 			CleanMargin: cleanMargin,
 			Pct:         pct,
 		}
-		result = append(result, products)
+		productList = append(productList, products)
+	}
+
+	result := entity.SbsProductResponse{
+		SisaPersesiaan: sisaPersesiaan,
+		SbsProductList: productList,
 	}
 
 	if err != nil && err.Error() == config.ErrRecordNotFound.Error() {

@@ -1,38 +1,22 @@
 package delivery
 
 import (
-	"errors"
-	"fmt"
-	"io"
 	"net/http"
-	"sbs-be/model/constant"
 	"sbs-be/model/dto"
-	"sbs-be/model/response"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
 )
 
 func (delivery *sbsDelivery) GetSo(c *gin.Context) {
-	var filter dto.RequestSo
-	errBind := c.ShouldBindJSON(&filter)
 
-	fmt.Println(filter)
+	marketplace_id := c.GetHeader("marketplace_id")
+	start_date := c.GetHeader("start_date")
+	end_date := c.GetHeader("end_date")
 
-	validate := validator.New()
-	if errBind != nil && errors.Is(errBind, io.EOF) { // checking if body req is empty
-		errResp := response.BuildEmptyBodyReqResponse(constant.RESPONSE_MESSAGE_BODY_REQ_EMPTY, errBind.Error())
-		c.JSON(http.StatusBadRequest, errResp)
-		return
-	} else if errBind != nil {
-		errResp := response.BuildInvalidTypeResponse(constant.RESPONSE_MESSAGE_INVALID_DATA_TYPE, errBind.Error())
-		c.JSON(http.StatusBadRequest, errResp)
-		return
-
-	} else if errBind := validate.Struct(filter); errBind != nil {
-		errResp := response.BuildInvalidTypeResponse(constant.RESPONSE_MESSAGE_INVALID_BODY_REQ, errBind.Error())
-		c.JSON(http.StatusBadRequest, errResp)
-		return
+	filter := dto.RequestSo{
+		MarketplaceId: marketplace_id,
+		StartDate:     start_date,
+		EndDate:       end_date,
 	}
 
 	data := delivery.SbsUsecase.GetSo(c, filter)
