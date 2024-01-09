@@ -15,6 +15,7 @@ type SbsDelivery interface {
 	PostSo(c *gin.Context)
 	PostPo(c *gin.Context)
 	UpdateSo(c *gin.Context)
+	GetSearchProduct(c *gin.Context)
 	NoRoute(c *gin.Context)
 }
 

@@ -20,6 +20,7 @@ type SbsRepository interface {
 	UpdateSoFlag(c context.Context, invoiceNo []string) error
 	PostSo(c context.Context, salesOrder entity.SbsSalesOrder) error
 	PostPo(c context.Context, purchasesOrder entity.SbsPurchaseOrder) error
+	GetSearchProduct(c context.Context, str string) ([]entity.SbsProduct, error)
 }
 
 type sbsRepository struct {

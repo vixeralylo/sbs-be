@@ -26,6 +26,10 @@ func (usecase *sbsUsecase) UpdateSo(c context.Context, invoice_no string, status
 			return response.BuildInternalErrorResponse(constant.ERROR_CODE_DATABASE_ERROR, constant.RESPONSE_CODE_INTERNAL_ERROR, constant.RESPONSE_MESSAGE_DATABASE_ERROR, err.Error())
 		}
 
+		if result[0].IsPayment {
+			return response.BuildDataNotFoundResponse()
+		}
+
 		for _, salesOrder := range result {
 			sku := salesOrder.Sku
 			qty := salesOrder.Qty

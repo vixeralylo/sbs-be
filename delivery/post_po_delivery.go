@@ -20,7 +20,26 @@ func (delivery *sbsDelivery) PostPo(c *gin.Context) {
 	var ppn float64
 	var total_price float64
 
-	xlsx, err := excelize.OpenFile("./excel/po.xlsx")
+	err := c.Request.ParseMultipartForm(10 << 20)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Unable to parse form data"})
+		return
+	}
+
+	file, err := c.FormFile("file")
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "File not found"})
+		return
+	}
+
+	// Save the uploaded file to a temporary location
+	uploadPath := "excel/" + file.Filename
+	if err := c.SaveUploadedFile(file, uploadPath); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save file"})
+		return
+	}
+
+	xlsx, err := excelize.OpenFile(uploadPath)
 	if err != nil {
 		log.Fatal("ERROR", err.Error())
 	}
