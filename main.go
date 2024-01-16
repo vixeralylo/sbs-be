@@ -6,21 +6,20 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"time"
-
 	"sbs-be/app"
 	"sbs-be/config"
+	"time"
 )
 
 func main() {
 
 	mysqlConn, errMySQL := config.ConnectMySQL()
 	if errMySQL != nil {
-		fmt.Sprintf("error postgresql connection: ", errMySQL)
+		fmt.Sprintf("error mysql connection: ", errMySQL)
 	}
 
 	router := app.InitRouter(mysqlConn)
-	fmt.Printf("routes Initialized")
+	fmt.Printf("Routes Initialized")
 
 	port := config.CONFIG["PORT"]
 	srv := &http.Server{
