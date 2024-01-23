@@ -5,11 +5,12 @@ import (
 )
 
 const (
-	LOCAL = "local"
+	LOCAL      = "local"
+	PRODUCTION = "production"
 )
 
 // ENVIRONMENT:
-const ENVIRONMENT string = LOCAL // LOCAL, DEVELOPMENT, PRODUCTION //
+const ENVIRONMENT string = PRODUCTION // LOCAL, DEVELOPMENT, PRODUCTION //
 
 var env = map[string]map[string]string{
 	// local environment configuration
@@ -20,6 +21,15 @@ var env = map[string]map[string]string{
 		"MYSQL_PORT":   "3306",
 		"MYSQL_USER":   "root",
 		"MYSQL_PASS":   "",
+		"MYSQL_SCHEMA": "sbs",
+	},
+	"production": {
+		"PIPELINE":     "production",
+		"PORT":         "8080",
+		"MYSQL_HOST":   "mysql-db",
+		"MYSQL_PORT":   "3306",
+		"MYSQL_USER":   "root",
+		"MYSQL_PASS":   "admin",
 		"MYSQL_SCHEMA": "sbs",
 	},
 }
