@@ -22,7 +22,7 @@ func InitRouter(
 
 	router.Use(middleware.CORSMiddleware())
 
-	svc := router.Group("/")
+	svc := router.Group("/api")
 	svc.GET("/product", sbsDelivery.GetSbsProduct)
 	svc.GET("/so", sbsDelivery.GetSo)
 	svc.POST("/so", sbsDelivery.PostSo)
