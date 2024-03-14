@@ -10,22 +10,22 @@ const (
 )
 
 // ENVIRONMENT:
-const ENVIRONMENT string = PRODUCTION // LOCAL, DEVELOPMENT, PRODUCTION //
+const ENVIRONMENT string = LOCAL // LOCAL, DEVELOPMENT, PRODUCTION //
 
 var env = map[string]map[string]string{
 	// local environment configuration
 	"local": {
 		"PIPELINE":     LOCAL,
-		"PORT":         "8080",
+		"PORT":         "8888",
 		"MYSQL_HOST":   "localhost",
 		"MYSQL_PORT":   "3306",
 		"MYSQL_USER":   "root",
-		"MYSQL_PASS":   "",
+		"MYSQL_PASS":   "root",
 		"MYSQL_SCHEMA": "sbs",
 	},
 	"production": {
-		"PIPELINE":     "production",
-		"PORT":         "8080",
+		"PIPELINE":     PRODUCTION,
+		"PORT":         "8888",
 		"MYSQL_HOST":   "mysql-db",
 		"MYSQL_PORT":   "3306",
 		"MYSQL_USER":   "root",

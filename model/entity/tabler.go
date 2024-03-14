@@ -4,6 +4,7 @@ const (
 	TABLE_PRODUCT        = "sbs_product"
 	TABLE_SALES_ORDER    = "sbs_sales_order"
 	TABLE_PURCHASE_ORDER = "sbs_purchase_order"
+	TABLE_COST           = "sbs_cost"
 )
 
 type Tabler interface {
@@ -20,4 +21,8 @@ func (SbsSalesOrder) TableName() string {
 
 func (SbsPurchaseOrder) TableName() string {
 	return TABLE_PURCHASE_ORDER
+}
+
+func (SbsCost) TableName() string {
+	return TABLE_COST
 }

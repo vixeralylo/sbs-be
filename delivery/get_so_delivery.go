@@ -12,11 +12,13 @@ func (delivery *sbsDelivery) GetSo(c *gin.Context) {
 	marketplace_id := c.GetHeader("marketplace_id")
 	start_date := c.GetHeader("start_date")
 	end_date := c.GetHeader("end_date")
+	invoice_no := c.GetHeader("invoice_no")
 
 	filter := dto.RequestSo{
 		MarketplaceId: marketplace_id,
 		StartDate:     start_date,
 		EndDate:       end_date,
+		SoNumber:      invoice_no,
 	}
 
 	data := delivery.SbsUsecase.GetSo(c, filter)

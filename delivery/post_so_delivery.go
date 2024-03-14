@@ -56,7 +56,7 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 		rows := xlsx.GetRows(sheet1Name)
 
 		for i := range rows {
-			if i+1 < 6 {
+			if i+1 < 6 || (xlsx.GetCellValue(sheet1Name, fmt.Sprintf("G%d", i+1)) != "" && xlsx.GetCellValue(sheet1Name, fmt.Sprintf("G%d", i+1)) != "Nama Toko: ") {
 				continue
 			}
 

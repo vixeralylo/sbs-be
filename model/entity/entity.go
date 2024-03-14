@@ -59,4 +59,15 @@ type SbsPurchaseOrder struct {
 	Discount    float64 `json:"discount" gorm:"column:discount;"`
 	Ppn         float64 `json:"ppn" gorm:"column:ppn;"`
 	TotalPrice  float64 `json:"total_price" gorm:"column:total_price;"`
+	Status      int     `json:"status" gorm:"column:status;"`
+}
+
+type SbsCost struct {
+	CostName      string `json:"cost_name" gorm:"column:cost_name;"`
+	Qty           string `json:"qty" gorm:"column:qty;"`
+	Price         string `json:"price" gorm:"column:price;"`
+	TotalPrice    string `json:"total_price" gorm:"column:total_price;"`
+	InvoiceNo     string `json:"invoice_no" gorm:"column:invoice_no;"`
+	MarketplaceId string `json:"marketplace_id" gorm:"column:marketplace_id;"`
+	Date          string `json:"date" gorm:"column:date;"`
 }

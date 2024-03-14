@@ -17,6 +17,7 @@ func (repository *sbsRepository) GetSo(c context.Context, filter dto.RequestSo) 
 	var marketplace_id = filter.MarketplaceId
 	var start_date = filter.StartDate
 	var end_date = filter.EndDate
+	var so_number = filter.SoNumber
 
 	dbTemp := repository.mysqlConn.Table(entity.TABLE_SALES_ORDER)
 
@@ -28,7 +29,11 @@ func (repository *sbsRepository) GetSo(c context.Context, filter dto.RequestSo) 
 		dbTemp = dbTemp.Where("order_date BETWEEN ? AND ?", start_date, end_date)
 	}
 
-	err := dbTemp.Find(&results).Error
+	if len(so_number) > 0 {
+		dbTemp = dbTemp.Where("invoice_no = ?", so_number)
+	}
+
+	err := dbTemp.Where("is_cancel = ?", false).Find(&results).Error
 
 	if err != nil {
 		return nil, err
@@ -45,7 +50,7 @@ func (repository *sbsRepository) GetSoById(c context.Context, orderId string) ([
 
 	var results []entity.SbsSalesOrder
 
-	err := repository.mysqlConn.Where("invoice_no = ?", orderId).Where("flag is true").Find(&results).Error
+	err := repository.mysqlConn.Where("invoice_no = ?", orderId).Where("flag is true").Where("is_cancel = ?", false).Find(&results).Error
 	if err != nil {
 		return nil, err
 	}

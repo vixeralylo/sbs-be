@@ -17,10 +17,15 @@ type SbsRepository interface {
 	GetSo(c context.Context, filter dto.RequestSo) ([]entity.SbsSalesOrder, error)
 	GetSoById(c context.Context, orderId string) ([]entity.SbsSalesOrder, error)
 	UpdateSo(c context.Context, invoiceNo string) error
+	UpdateSoCancel(c context.Context, invoiceNo string) error
 	UpdateSoFlag(c context.Context, invoiceNo []string) error
+	GetPo(c context.Context, filter dto.RequestPo) ([]entity.SbsPurchaseOrder, error)
 	PostSo(c context.Context, salesOrder entity.SbsSalesOrder) error
 	PostPo(c context.Context, purchasesOrder entity.SbsPurchaseOrder) error
 	GetSearchProduct(c context.Context, str string) ([]entity.SbsProduct, error)
+	UpdatePo(c context.Context, poNo string) error
+	GetCost(c context.Context, filter dto.RequestCost) ([]entity.SbsCost, error)
+	PostCost(c context.Context, filter entity.SbsCost) error
 }
 
 type sbsRepository struct {
