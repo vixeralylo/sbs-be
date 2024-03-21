@@ -19,6 +19,7 @@ type SbsUsecase interface {
 	UpdatePo(c context.Context, poNo string, status string) *response.ResponseContainer
 	GetCost(c context.Context, filter dto.RequestCost) *response.ResponseContainer
 	PostCost(c context.Context, req dto.RequestCost) *response.ResponseContainer
+	GetSummary(c context.Context) *response.ResponseContainer
 	Ping() string
 }
 

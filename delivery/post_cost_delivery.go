@@ -11,9 +11,11 @@ func (delivery *sbsDelivery) PostCost(c *gin.Context) {
 
 	req := dto.RequestCost{
 		Date:          c.GetHeader("costDate"),
+		CostType:      c.GetHeader("costType"),
 		CostName:      c.GetHeader("costName"),
 		Qty:           c.GetHeader("qty"),
 		Price:         c.GetHeader("price"),
+		AddedPrice:    c.GetHeader("addedPrice"),
 		TotalPrice:    c.GetHeader("totalPrice"),
 		MarketplaceId: c.GetHeader("marketplace_id"),
 		InvoiceNo:     c.GetHeader("invoice_no"),

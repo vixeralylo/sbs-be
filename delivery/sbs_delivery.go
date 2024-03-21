@@ -21,6 +21,7 @@ type SbsDelivery interface {
 	UpdatePo(c *gin.Context)
 	GetCost(c *gin.Context)
 	PostCost(c *gin.Context)
+	GetSummary(c *gin.Context)
 	NoRoute(c *gin.Context)
 }
 

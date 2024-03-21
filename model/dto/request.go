@@ -31,9 +31,11 @@ type RequestPo struct {
 }
 
 type RequestCost struct {
+	CostType      string `json:"cost_type"`
 	CostName      string `json:"cost_name"`
 	Qty           string `json:"qty"`
 	Price         string `json:"price"`
+	AddedPrice    string `json:"added_price"`
 	TotalPrice    string `json:"total_price"`
 	InvoiceNo     string `json:"invoice_no"`
 	MarketplaceId string `json:"marketplace_id"`

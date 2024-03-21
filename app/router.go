@@ -34,6 +34,7 @@ func InitRouter(
 	svc.GET("/search", sbsDelivery.GetSearchProduct)
 	svc.GET("/cost", sbsDelivery.GetCost)
 	svc.POST("/cost", sbsDelivery.PostCost)
+	svc.GET("/summary", sbsDelivery.GetSummary)
 
 	router.NoRoute(sbsDelivery.NoRoute)
 

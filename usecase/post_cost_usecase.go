@@ -14,9 +14,11 @@ func (usecase *sbsUsecase) PostCost(c context.Context, req dto.RequestCost) *res
 
 	filter := entity.SbsCost{
 		Date:          req.Date,
+		CostType:      req.CostType,
 		CostName:      req.CostName,
 		Qty:           req.Qty,
 		Price:         req.Price,
+		AddedPrice:    req.AddedPrice,
 		TotalPrice:    req.TotalPrice,
 		MarketplaceId: req.MarketplaceId,
 		InvoiceNo:     req.InvoiceNo,

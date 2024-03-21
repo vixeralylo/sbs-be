@@ -26,6 +26,8 @@ type SbsRepository interface {
 	UpdatePo(c context.Context, poNo string) error
 	GetCost(c context.Context, filter dto.RequestCost) ([]entity.SbsCost, error)
 	PostCost(c context.Context, filter entity.SbsCost) error
+	GetSummarySo(c context.Context, monthYear string) (float32, error)
+	GetSummaryCost(c context.Context, monthYear string, costType string) (int, error)
 }
 
 type sbsRepository struct {

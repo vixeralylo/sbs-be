@@ -63,11 +63,29 @@ type SbsPurchaseOrder struct {
 }
 
 type SbsCost struct {
+	CostType      string `json:"cost_type" gorm:"column:cost_type;"`
 	CostName      string `json:"cost_name" gorm:"column:cost_name;"`
 	Qty           string `json:"qty" gorm:"column:qty;"`
 	Price         string `json:"price" gorm:"column:price;"`
+	AddedPrice    string `json:"added_price" gorm:"column:added_price;"`
 	TotalPrice    string `json:"total_price" gorm:"column:total_price;"`
 	InvoiceNo     string `json:"invoice_no" gorm:"column:invoice_no;"`
 	MarketplaceId string `json:"marketplace_id" gorm:"column:marketplace_id;"`
 	Date          string `json:"date" gorm:"column:date;"`
+}
+
+type SbsSummary struct {
+	MonthYear     string `json:"month_year"`
+	SummaryDetail SbsSummaryDetail
+}
+
+type SbsSummaryDetail struct {
+	TotalMarginSo   float32 `json:"total_margin_so"`
+	GajiKaryawan    int     `json:"gaji_karyawan"`
+	Pln             int     `json:"pln"`
+	TotalCost       int     `json:"total_cost"`
+	TotalAds        int     `json:"total_ads"`
+	TotalLoss       int     `json:"total_loss"`
+	TotalTakeProfit int     `json:"total_take_profit"`
+	SumTotal        float32 `json:"sum_total"`
 }
