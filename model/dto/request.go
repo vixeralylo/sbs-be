@@ -18,17 +18,18 @@ type RequestSo struct {
 }
 
 type RequestPo struct {
-	PoNumber    string  `json:"po_number"`
-	PoDate      string  `json:"po_date"`
-	Sku         string  `json:"sku"`
-	StartDate   string  `json:"start_date"`
-	EndDate     string  `json:"end_date"`
-	ProductName string  `json:"product_name"`
-	Qty         int     `json:"qty"`
-	Price       float64 `json:"price"`
-	Discount    float64 `json:"discount"`
-	Ppn         float64 `json:"ppn"`
-	TotalPrice  float64 `json:"total_price"`
+	PoNumber     string  `json:"po_number"`
+	PoDate       string  `json:"po_date"`
+	Sku          string  `json:"sku"`
+	StartDate    string  `json:"start_date"`
+	EndDate      string  `json:"end_date"`
+	ProductName  string  `json:"product_name"`
+	Qty          int     `json:"qty"`
+	Price        float64 `json:"price"`
+	Discount     float64 `json:"discount"`
+	Ppn          float64 `json:"ppn"`
+	TotalPrice   float64 `json:"total_price"`
+	IsNotPayment string  `json:"is_not_payment"`
 }
 
 type RequestSoManual struct {

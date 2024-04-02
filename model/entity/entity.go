@@ -60,6 +60,7 @@ type SbsPurchaseOrder struct {
 	Ppn         float64 `json:"ppn" gorm:"column:ppn;"`
 	TotalPrice  float64 `json:"total_price" gorm:"column:total_price;"`
 	Status      int     `json:"status" gorm:"column:status;"`
+	IsPayment   bool    `json:"is_payment"`
 }
 
 type SbsCost struct {
