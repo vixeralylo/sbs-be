@@ -14,6 +14,7 @@ type RequestSo struct {
 	StartDate     string `json:"start_date" validate:"required"`
 	EndDate       string `json:"end_date" validate:"required"`
 	SoNumber      string `json:"so_number"`
+	IsNotPayment  string `json:"is_not_payment"`
 }
 
 type RequestPo struct {
@@ -28,6 +29,16 @@ type RequestPo struct {
 	Discount    float64 `json:"discount"`
 	Ppn         float64 `json:"ppn"`
 	TotalPrice  float64 `json:"total_price"`
+}
+
+type RequestSoManual struct {
+	MarketplaceId string `json:"marketplace_id"`
+	OrderDate     string `json:"order_date"`
+	Sku           string `json:"sku"`
+	Qty           string `json:"qty"`
+	Price         string `json:"Price"`
+	SoNumber      string `json:"so_number"`
+	TotalPrice    string `json:"total_price"`
 }
 
 type RequestCost struct {

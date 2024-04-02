@@ -26,6 +26,7 @@ func InitRouter(
 	svc.GET("/product", sbsDelivery.GetSbsProduct)
 	svc.GET("/so", sbsDelivery.GetSo)
 	svc.POST("/so", sbsDelivery.PostSo)
+	svc.POST("/so_manual", sbsDelivery.PostSoManual)
 	svc.PUT("/so", sbsDelivery.UpdateSo)
 	svc.DELETE("/so", sbsDelivery.DeleteSo)
 	svc.GET("/po", sbsDelivery.GetPo)
@@ -35,6 +36,7 @@ func InitRouter(
 	svc.GET("/cost", sbsDelivery.GetCost)
 	svc.POST("/cost", sbsDelivery.PostCost)
 	svc.GET("/summary", sbsDelivery.GetSummary)
+	svc.PUT("/margin", sbsDelivery.UpdateMargin)
 
 	router.NoRoute(sbsDelivery.NoRoute)
 

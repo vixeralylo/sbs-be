@@ -13,6 +13,7 @@ type SbsDelivery interface {
 	GetSbsProduct(c *gin.Context)
 	GetSo(c *gin.Context)
 	PostSo(c *gin.Context)
+	PostSoManual(c *gin.Context)
 	GetPo(c *gin.Context)
 	PostPo(c *gin.Context)
 	UpdateSo(c *gin.Context)
@@ -22,6 +23,7 @@ type SbsDelivery interface {
 	GetCost(c *gin.Context)
 	PostCost(c *gin.Context)
 	GetSummary(c *gin.Context)
+	UpdateMargin(c *gin.Context)
 	NoRoute(c *gin.Context)
 }
 

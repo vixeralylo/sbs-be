@@ -11,6 +11,7 @@ type SbsUsecase interface {
 	GetSbsProduct(c context.Context) *response.ResponseContainer
 	GetSo(c context.Context, filter dto.RequestSo) *response.ResponseContainer
 	PostSo(c context.Context, marketplace string, req []dto.RequestContainer) *response.ResponseContainer
+	PostSoManual(c context.Context, req dto.RequestSoManual) *response.ResponseContainer
 	GetPo(c context.Context, filter dto.RequestPo) *response.ResponseContainer
 	PostPo(c context.Context, req []dto.RequestPo) *response.ResponseContainer
 	UpdateSo(c context.Context, invoiceNo string, status string) *response.ResponseContainer

@@ -18,6 +18,7 @@ func (repository *sbsRepository) GetSo(c context.Context, filter dto.RequestSo) 
 	var start_date = filter.StartDate
 	var end_date = filter.EndDate
 	var so_number = filter.SoNumber
+	var is_not_payment = filter.IsNotPayment
 
 	dbTemp := repository.mysqlConn.Table(entity.TABLE_SALES_ORDER)
 
@@ -31,6 +32,18 @@ func (repository *sbsRepository) GetSo(c context.Context, filter dto.RequestSo) 
 
 	if len(so_number) > 0 {
 		dbTemp = dbTemp.Where("invoice_no = ?", so_number)
+	}
+
+	if len(is_not_payment) > 0 {
+
+		var isNotPayment bool
+		if is_not_payment == "true" {
+			isNotPayment = true
+		} else {
+			isNotPayment = false
+		}
+
+		dbTemp = dbTemp.Where("is_payment = ?", isNotPayment)
 	}
 
 	err := dbTemp.Where("is_cancel = ?", false).Find(&results).Error
