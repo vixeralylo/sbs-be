@@ -9,7 +9,7 @@ import (
 	"sbs-be/model/response"
 )
 
-func (usecase *sbsUsecase) UpdateSbsProduct(c context.Context, sku string, quantity string) *response.ResponseContainer {
+func (usecase *sbsUsecase) UpdateSbsProduct(c context.Context, sku string, quantity string, hpp float64) *response.ResponseContainer {
 
 	// string to int
 	qty, errConvert := strconv.Atoi(quantity)
@@ -18,7 +18,7 @@ func (usecase *sbsUsecase) UpdateSbsProduct(c context.Context, sku string, quant
 		panic(errConvert)
 	}
 
-	err := usecase.SbsRepository.UpdateSbsProduct(c, sku, qty)
+	err := usecase.SbsRepository.UpdateSbsProduct(c, sku, qty, hpp)
 	if err != nil && err.Error() == config.ErrRecordNotFound.Error() {
 		return response.BuildDataNotFoundResponse()
 	} else if err != nil {

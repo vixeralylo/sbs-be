@@ -17,11 +17,11 @@ func (usecase *sbsUsecase) PostSo(c context.Context, marketplace string, req []d
 	var tempDistinct []string
 
 	if marketplace == "Tokopedia" {
-		pwMerchantPct = 0.045
+		pwMerchantPct = 0.055
 		ongkirPct = 0.04
 	}
 	if marketplace == "Shopee" {
-		pwMerchantPct = 0.04
+		pwMerchantPct = 0.065
 		ongkirPct = 0.04
 	}
 
