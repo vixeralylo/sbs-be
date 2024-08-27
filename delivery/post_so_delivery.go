@@ -66,7 +66,7 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 				panic(err)
 			}
 
-			price, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("Q%d", i+1)))
+			price, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("R%d", i+1)))
 			if err != nil {
 				// ... handle error
 				panic(err)

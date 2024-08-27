@@ -15,7 +15,8 @@ func main() {
 
 	mysqlConn, errMySQL := config.ConnectMySQL()
 	if errMySQL != nil {
-		fmt.Sprintf("error mysql connection: ", errMySQL)
+		fmt.Println("error mysql connection: ", errMySQL)
+		panic(errMySQL)
 	}
 
 	router := app.InitRouter(mysqlConn)
@@ -44,7 +45,7 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
-		fmt.Sprintf("Server Shutdown:", err)
+		fmt.Println("Server Shutdown:", err)
 	}
 	fmt.Printf("Server exiting")
 }
