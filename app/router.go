@@ -31,6 +31,7 @@ func InitRouter(
 	svc.PUT("/so", sbsDelivery.UpdateSo)
 	svc.DELETE("/so", sbsDelivery.DeleteSo)
 	svc.GET("/po", sbsDelivery.GetPo)
+	svc.DELETE("/po", sbsDelivery.DeletePo)
 	svc.POST("/po", sbsDelivery.PostPo)
 	svc.PUT("/po", sbsDelivery.UpdatePo)
 	svc.GET("/search", sbsDelivery.GetSearchProduct)

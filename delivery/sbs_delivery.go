@@ -21,6 +21,7 @@ type SbsDelivery interface {
 	GetSearchProduct(c *gin.Context)
 	DeleteSo(c *gin.Context)
 	UpdatePo(c *gin.Context)
+	DeletePo(c *gin.Context)
 	GetCost(c *gin.Context)
 	PostCost(c *gin.Context)
 	GetSummary(c *gin.Context)

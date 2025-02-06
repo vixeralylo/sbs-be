@@ -44,3 +44,26 @@ func (repository *sbsRepository) GetPo(c context.Context, filter dto.RequestPo) 
 
 	return results, nil
 }
+
+func (repository *sbsRepository) GetPoById(c context.Context, filter dto.RequestPo) ([]entity.SbsPurchaseOrder, error) {
+
+	if c.Err() == context.DeadlineExceeded {
+		return nil, c.Err()
+	}
+
+	var results []entity.SbsPurchaseOrder
+
+	dbTemp := repository.mysqlConn.Table(entity.TABLE_PURCHASE_ORDER).Where("po_number =  ?", filter.PoNumber)
+
+	if len(filter.Sku) > 0 {
+		dbTemp = dbTemp.Where("sku = ?", filter.Sku)
+	}
+
+	err := dbTemp.Find(&results).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return results, nil
+}

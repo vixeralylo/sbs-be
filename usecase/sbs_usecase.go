@@ -19,6 +19,7 @@ type SbsUsecase interface {
 	GetSearchProduct(c context.Context, str string) *response.ResponseContainer
 	DeleteSo(c context.Context, invoiceNo string) *response.ResponseContainer
 	UpdatePo(c context.Context, poNo string, status string) *response.ResponseContainer
+	DeletePo(c context.Context, poNo string, sku string) *response.ResponseContainer
 	GetCost(c context.Context, filter dto.RequestCost) *response.ResponseContainer
 	PostCost(c context.Context, req dto.RequestCost) *response.ResponseContainer
 	GetSummary(c context.Context) *response.ResponseContainer

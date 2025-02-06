@@ -29,6 +29,7 @@ type SbsRepository interface {
 	PostCost(c context.Context, filter entity.SbsCost) error
 	GetSummarySo(c context.Context, monthYear string) (float32, error)
 	GetSummaryCost(c context.Context, monthYear string, costType string) (int, error)
+	DeletePo(c context.Context, poNo string, sku string) error
 }
 
 type sbsRepository struct {
