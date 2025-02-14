@@ -15,7 +15,7 @@ func (usecase *sbsUsecase) DeletePo(c context.Context, poNo string, sku string) 
 		PoNumber: poNo,
 		Sku:      sku,
 	}
-	resultOrder, errGetPo := usecase.SbsRepository.GetPo(c, filter)
+	resultOrder, errGetPo := usecase.SbsRepository.GetPoById(c, filter)
 	if errGetPo != nil && errGetPo.Error() == config.ErrRecordNotFound.Error() {
 		return response.BuildDataNotFoundResponse()
 	} else if errGetPo != nil {

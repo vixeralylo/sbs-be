@@ -21,6 +21,7 @@ type SbsRepository interface {
 	UpdateSoCancel(c context.Context, invoiceNo string) error
 	UpdateSoFlag(c context.Context, invoiceNo []string) error
 	GetPo(c context.Context, filter dto.RequestPo) ([]entity.SbsPurchaseOrder, error)
+	GetPoById(c context.Context, filter dto.RequestPo) ([]entity.SbsPurchaseOrder, error)
 	PostSo(c context.Context, salesOrder entity.SbsSalesOrder) error
 	PostPo(c context.Context, purchasesOrder entity.SbsPurchaseOrder) error
 	GetSearchProduct(c context.Context, str string) ([]entity.SbsProduct, error)
