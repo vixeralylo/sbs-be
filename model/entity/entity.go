@@ -5,19 +5,21 @@ type SbsProductResponse struct {
 	SbsProductList []SbsProduct
 }
 type SbsProduct struct {
-	Sku         string  `json:"sku" gorm:"column:sku;primary_key;"`
-	ProductName string  `json:"product_name" gorm:"column:product_name;"`
-	Stock       string  `json:"stock" gorm:"column:stock;"`
-	Hpp         int     `json:"hpp" gorm:"column:hpp;"`
-	Price       float64 `json:"price" gorm:"column:price;"`
-	BrandId     string  `json:"brand_id" gorm:"column:brand_id;"`
-	SupplierId  string  `json:"supplier_id" gorm:"column:supplier_id;"`
-	Seq         string  `json:"seq" gorm:"column:seq;"`
-	Gross       float64 `json:"gross"`
-	Admin       float64 `json:"admin"`
-	Ongkir      float64 `json:"ongkir"`
-	CleanMargin float64 `json:"clean_margin"`
-	Pct         float64 `json:"pct"`
+	Sku            string  `json:"sku" gorm:"column:sku;primary_key;"`
+	ProductName    string  `json:"product_name" gorm:"column:product_name;"`
+	Stock          string  `json:"stock" gorm:"column:stock;"`
+	Hpp            int     `json:"hpp" gorm:"column:hpp;"`
+	Price          float64 `json:"price" gorm:"column:price;"`
+	AdminFeeTok    float64 `json:"admin_fee_tok" gorm:"column:admin_fee_tok;"`
+	OngkirFeeTok   float64 `json:"ongkir_fee_tok" gorm:"column:ongkir_fee_tok;"`
+	AdminFeeSho    float64 `json:"admin_fee_sho" gorm:"column:admin_fee_sho;"`
+	OngkirFeeSho   float64 `json:"ongkir_fee_sho" gorm:"column:ongkir_fee_sho;"`
+	Seq            string  `json:"seq" gorm:"column:seq;"`
+	Gross          float64 `json:"gross"`
+	CleanMarginTok float64 `json:"clean_margin_tok"`
+	CleanMarginSho float64 `json:"clean_margin_sho"`
+	PctTok         float64 `json:"pct_tok"`
+	PctSho         float64 `json:"pct_sho"`
 }
 
 type SbsSalesOrderResponse struct {

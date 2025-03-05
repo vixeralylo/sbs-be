@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"fmt"
 
 	"sbs-be/config"
 	"sbs-be/model/constant"
@@ -15,15 +16,6 @@ func (usecase *sbsUsecase) PostSo(c context.Context, marketplace string, req []d
 	var pwMerchantPct float32
 	var ongkirPct float32
 	var tempDistinct []string
-
-	if marketplace == "Tokopedia" {
-		pwMerchantPct = 0.055
-		ongkirPct = 0.04
-	}
-	if marketplace == "Shopee" {
-		pwMerchantPct = 0.065
-		ongkirPct = 0.04
-	}
 
 	for _, saleOrder := range req {
 
@@ -50,10 +42,22 @@ func (usecase *sbsUsecase) PostSo(c context.Context, marketplace string, req []d
 		} else {
 			hpp = productById[0].Hpp
 			productName = productById[0].ProductName
-		}
 
+			if marketplace == "Tokopedia" {
+				pwMerchantPct = float32(productById[0].AdminFeeTok / 100)
+				ongkirPct = float32(productById[0].OngkirFeeTok / 100)
+			}
+			if marketplace == "Shopee" {
+				pwMerchantPct = float32(productById[0].AdminFeeSho / 100)
+				ongkirPct = float32(productById[0].OngkirFeeSho / 100)
+			}
+		}
+		fmt.Println("PW MERCHANT : ", pwMerchantPct)
 		totalPrice := saleOrder.Qty * saleOrder.Price
+		fmt.Println("TOTAL PRICE 1 : ", totalPrice)
 		pwMerchantFee := pwMerchantPct * float32(totalPrice)
+		fmt.Println("TOTAL PRICE : ", float32(totalPrice))
+		fmt.Println("PW MERCHANT FEE : ", pwMerchantFee)
 		ongkirFee := ongkirPct * float32(totalPrice)
 		grossMargin := totalPrice - (hpp * saleOrder.Qty)
 		cleanMargin := float32(grossMargin) - pwMerchantFee - ongkirFee

@@ -21,32 +21,41 @@ func (usecase *sbsUsecase) GetSbsProduct(c context.Context) *response.ResponseCo
 		price := float64(product.Price)
 		hpp := float64(product.Hpp)
 		gross := price - hpp
-		admin := 0.045 * price
-		ongkir := 0.04 * price
-		cleanMargin := gross - admin - ongkir
+		adminTok := (product.AdminFeeTok / 100) * price
+		ongkirTok := (product.OngkirFeeTok / 100) * price
+		adminSho := (product.AdminFeeSho / 100) * price
+		ongkirSho := (product.OngkirFeeSho / 100) * price
+		cleanMarginTok := gross - adminTok - ongkirTok
+		cleanMarginSho := gross - adminSho - ongkirSho
 		stock, _ := strconv.ParseFloat(product.Stock, 64)
 
-		var pct float64
-		if cleanMargin != 0 {
-			pct = toFixed((cleanMargin/hpp)*100, 2)
+		var pctTok, pctSho float64
+		if cleanMarginTok != 0 {
+			pctTok = toFixed((cleanMarginTok/hpp)*100, 2)
+			pctSho = toFixed((cleanMarginSho/hpp)*100, 2)
 		} else {
-			pct = 0
+			pctTok = 0
+			pctSho = 0
 		}
 
 		sisaPersesiaan = sisaPersesiaan + (stock * hpp)
 
 		products := entity.SbsProduct{
-			Sku:         product.Sku,
-			ProductName: product.ProductName,
-			Stock:       product.Stock,
-			Hpp:         product.Hpp,
-			Price:       product.Price,
-			Seq:         product.Seq,
-			Gross:       gross,
-			Admin:       admin,
-			Ongkir:      ongkir,
-			CleanMargin: cleanMargin,
-			Pct:         pct,
+			Sku:            product.Sku,
+			ProductName:    product.ProductName,
+			Stock:          product.Stock,
+			Hpp:            product.Hpp,
+			Price:          product.Price,
+			Seq:            product.Seq,
+			Gross:          gross,
+			AdminFeeTok:    adminTok,
+			OngkirFeeTok:   ongkirTok,
+			AdminFeeSho:    adminSho,
+			OngkirFeeSho:   ongkirSho,
+			CleanMarginTok: cleanMarginTok,
+			CleanMarginSho: cleanMarginSho,
+			PctTok:         pctTok,
+			PctSho:         pctSho,
 		}
 		productList = append(productList, products)
 	}
