@@ -16,7 +16,7 @@ var env = map[string]map[string]string{
 	// local environment configuration
 	"local": {
 		"PIPELINE":     LOCAL,
-		"PORT":         "8888",
+		"PORT":         "8080",
 		"MYSQL_HOST":   "127.0.0.1",
 		"MYSQL_PORT":   "3306",
 		"MYSQL_USER":   "root",
