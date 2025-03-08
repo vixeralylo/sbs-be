@@ -16,7 +16,7 @@ import (
 var ErrRecordNotFound = errors.New("record not found")
 
 func ConnectMySQL() (*gorm.DB, error) {
-	connectionString := "root:root@tcp(host.docker.internal:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
+	connectionString := "root:root@tcp(103.175.218.193:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
 
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
