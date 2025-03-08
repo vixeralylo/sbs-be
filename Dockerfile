@@ -5,6 +5,11 @@ FROM golang:1.21.1
 # Set destination for COPY
 WORKDIR /app
 
+# Set timezone to Asia/Jakarta
+RUN apt update && apt install -y tzdata && \
+    ln -sf /usr/share/zoneinfo/Asia/Jakarta /etc/localtime && \
+    echo "Asia/Jakarta" > /etc/timezone
+    
 # Download Go modules
 COPY go.mod go.sum ./
 RUN go mod download
