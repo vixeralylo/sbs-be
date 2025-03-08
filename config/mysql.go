@@ -7,7 +7,6 @@ import (
 	"time"
 
 	_ "github.com/apache/calcite-avatica-go/v5"
-	_ "github.com/go-sql-driver/mysql"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -16,7 +15,7 @@ import (
 var ErrRecordNotFound = errors.New("record not found")
 
 func ConnectMySQL() (*gorm.DB, error) {
-	connectionString := "root:root@tcp(103.175.218.193:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
+	connectionString := CONFIG["MYSQL_USER"] + ":" + CONFIG["MYSQL_PASS"] + "@tcp(" + CONFIG["MYSQL_HOST"] + ":" + CONFIG["MYSQL_PORT"] + ")/" + CONFIG["MYSQL_SCHEMA"] + "?parseTime=true&loc=Local"
 
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer

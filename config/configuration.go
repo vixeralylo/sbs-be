@@ -2,8 +2,6 @@ package config
 
 import (
 	"os"
-
-	_ "github.com/go-sql-driver/mysql"
 )
 
 const (
