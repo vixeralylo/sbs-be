@@ -55,3 +55,9 @@ type RequestCost struct {
 	StartDate     string `json:"start_date"`
 	EndDate       string `json:"end_date"`
 }
+
+type RequestBody struct {
+	StartDate    string `json:"start_date"`
+	EndDate      string `json:"end_date"`
+	IsNotPayment string `json:"is_not_payment"`
+}
