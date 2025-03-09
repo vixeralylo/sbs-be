@@ -9,23 +9,13 @@ import (
 )
 
 func (delivery *sbsDelivery) GetPo(c *gin.Context) {
-	log.Println("Headers received:", c.Request.Header)
-	c.Next()
-
-	start_date := c.Request.Header.Get("Start-Date") // Coba huruf kapital
-	if start_date == "" {
-		start_date = c.Request.Header.Get("start_date") // Coba format lain
+	for key, values := range c.Request.Header {
+		log.Printf("%s: %s\n", key, values)
 	}
 
-	end_date := c.Request.Header.Get("End-Date")
-	if end_date == "" {
-		end_date = c.Request.Header.Get("end_date")
-	}
-
-	is_not_payment := c.Request.Header.Get("Is-Not-Payment")
-	if is_not_payment == "" {
-		is_not_payment = c.Request.Header.Get("is_not_payment")
-	}
+	start_date := c.GetHeader("start_date")
+	end_date := c.GetHeader("end_date")
+	is_not_payment := c.GetHeader("is_not_payment")
 
 	log.Println("start_date:", start_date)
 	log.Println("end_date:", end_date)
