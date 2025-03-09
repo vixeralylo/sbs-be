@@ -3,6 +3,7 @@ package delivery
 import (
 	"fmt"
 	"net/http"
+	"sbs-be/model/dto"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -10,10 +11,18 @@ import (
 
 func (delivery *sbsDelivery) UpdateSbsProduct(c *gin.Context) {
 
-	sku := c.GetHeader("sku")
-	qty := c.GetHeader("qty")
-	hpp := c.GetHeader("hpp")
-	price := c.GetHeader("price")
+	var reqBody dto.RequestBody
+	// Bind JSON request body to struct
+	if err := c.ShouldBindJSON(&reqBody); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
+	// Access values
+	hpp := reqBody.Hpp
+	price := reqBody.Price
+	sku := reqBody.Sku
+	qty := reqBody.Qty
 
 	// Convert string to float32
 	hppConvert, err := strconv.ParseFloat(hpp, 64)

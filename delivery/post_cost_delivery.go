@@ -9,16 +9,34 @@ import (
 
 func (delivery *sbsDelivery) PostCost(c *gin.Context) {
 
+	var reqBody dto.RequestBody
+	// Bind JSON request body to struct
+	if err := c.ShouldBindJSON(&reqBody); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
+	// Access values
+	cost_date := reqBody.CostDate
+	cost_type := reqBody.CostType
+	cost_name := reqBody.CostName
+	qty := reqBody.Qty
+	price := reqBody.Price
+	added_price := reqBody.AddedPrice
+	total_price := reqBody.TotalPrice
+	marketplace_id := reqBody.MarketplaceId
+	invoice_no := reqBody.InvoiceNo
+
 	req := dto.RequestCost{
-		Date:          c.GetHeader("costDate"),
-		CostType:      c.GetHeader("costType"),
-		CostName:      c.GetHeader("costName"),
-		Qty:           c.GetHeader("qty"),
-		Price:         c.GetHeader("price"),
-		AddedPrice:    c.GetHeader("addedPrice"),
-		TotalPrice:    c.GetHeader("totalPrice"),
-		MarketplaceId: c.GetHeader("marketplace_id"),
-		InvoiceNo:     c.GetHeader("invoice_no"),
+		Date:          cost_date,
+		CostType:      cost_type,
+		CostName:      cost_name,
+		Qty:           qty,
+		Price:         price,
+		AddedPrice:    added_price,
+		TotalPrice:    total_price,
+		MarketplaceId: marketplace_id,
+		InvoiceNo:     invoice_no,
 	}
 
 	data := delivery.SbsUsecase.PostCost(c, req)

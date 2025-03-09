@@ -2,14 +2,23 @@ package delivery
 
 import (
 	"net/http"
+	"sbs-be/model/dto"
 
 	"github.com/gin-gonic/gin"
 )
 
 func (delivery *sbsDelivery) DeletePo(c *gin.Context) {
 
-	poNo := c.GetHeader("po_no")
-	sku := c.GetHeader("sku")
+	var reqBody dto.RequestBody
+	// Bind JSON request body to struct
+	if err := c.ShouldBindJSON(&reqBody); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
+	// Access values
+	poNo := reqBody.PoNo
+	sku := reqBody.Sku
 
 	data := delivery.SbsUsecase.DeletePo(c, poNo, sku)
 

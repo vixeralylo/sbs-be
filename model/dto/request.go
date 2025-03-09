@@ -57,7 +57,21 @@ type RequestCost struct {
 }
 
 type RequestBody struct {
-	StartDate    string `json:"start_date"`
-	EndDate      string `json:"end_date"`
-	IsNotPayment string `json:"is_not_payment"`
+	StartDate     string `json:"start_date"`
+	EndDate       string `json:"end_date"`
+	IsNotPayment  string `json:"is_not_payment"`
+	MarketplaceId string `json:"marketplace_id"`
+	InvoiceNo     string `json:"invoice_no"`
+	PoNo          string `json:"po_no"`
+	Sku           string `json:"sku"`
+	Status        string `json:"status"`
+	CostType      string `json:"cost_type"`
+	CostDate      string `json:"cost_date"`
+	CostName      string `json:"cost_name"`
+	Qty           string `json:"qty"`
+	Hpp           string `json:"hpp"`
+	Price         string `json:"price"`
+	AddedPrice    string `json:"added_price"`
+	TotalPrice    string `json:"total_price"`
+	SoDate        string `json:"so_date"`
 }

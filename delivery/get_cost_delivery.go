@@ -9,8 +9,15 @@ import (
 
 func (delivery *sbsDelivery) GetCost(c *gin.Context) {
 
-	start_date := c.GetHeader("start_date")
-	end_date := c.GetHeader("end_date")
+	var reqBody dto.RequestBody
+	// Bind JSON request body to struct
+	if err := c.ShouldBindJSON(&reqBody); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
+	start_date := reqBody.StartDate
+	end_date := reqBody.EndDate
 
 	filter := dto.RequestCost{
 		StartDate: start_date,
