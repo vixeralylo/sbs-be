@@ -9,6 +9,8 @@ import (
 )
 
 func (delivery *sbsDelivery) GetPo(c *gin.Context) {
+	log.Println("Headers received:", c.Request.Header)
+	c.Next()
 
 	start_date := c.GetHeader("start_date")
 	end_date := c.GetHeader("end_date")
