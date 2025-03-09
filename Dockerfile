@@ -6,9 +6,9 @@ FROM golang:1.21.1
 WORKDIR /app
 
 # Set timezone to Asia/Jakarta
-RUN apt update && apt install -y tzdata && \
-    ln -sf /usr/share/zoneinfo/Asia/Jakarta /etc/localtime && \
-    echo "Asia/Jakarta" > /etc/timezone
+# RUN apt update && apt install -y tzdata && \
+#     ln -sf /usr/share/zoneinfo/Asia/Jakarta /etc/localtime && \
+#     echo "Asia/Jakarta" > /etc/timezone
     
 # Download Go modules
 COPY go.mod go.sum ./
