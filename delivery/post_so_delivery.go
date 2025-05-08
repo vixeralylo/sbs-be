@@ -28,7 +28,7 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 	}
 
 	var marketplace string
-	if strings.Contains(file.Filename, "Tokopedia") {
+	if strings.Contains(file.Filename, "Semua pesanan") {
 		marketplace = "Tokopedia"
 	} else {
 		marketplace = "Shopee"
@@ -52,21 +52,21 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 
 	//TOKOPEDIA
 	if marketplace == "Tokopedia" {
-		sheet1Name := "Laporan Penjualan"
+		sheet1Name := "OrderSKUList"
 		rows := xlsx.GetRows(sheet1Name)
 
 		for i := range rows {
-			if i+1 < 6 || (xlsx.GetCellValue(sheet1Name, fmt.Sprintf("G%d", i+1)) != "" && xlsx.GetCellValue(sheet1Name, fmt.Sprintf("G%d", i+1)) != "Nama Toko: ") {
+			if i+1 < 3 || xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Canceled" {
 				continue
 			}
-
-			qty, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("N%d", i+1)))
+			
+			qty, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("J%d", i+1)))
 			if err != nil {
 				// ... handle error
 				panic(err)
 			}
 
-			price, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("R%d", i+1)))
+			price, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("L%d", i+1)))
 			if err != nil {
 				// ... handle error
 				panic(err)
@@ -79,9 +79,9 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 
 			// Assuming columns "A" and "B" for this example
 			so := dto.RequestContainer{
-				OrderDate: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i+1))[6:10] + "-" + xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i+1))[3:5] + "-" + xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i+1))[0:2],
-				InvoiceNo: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)),
-				Sku:       xlsx.GetCellValue(sheet1Name, fmt.Sprintf("K%d", i+1)),
+				OrderDate: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("AB%d", i+1))[0:10],
+				InvoiceNo: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i+1)),
+				Sku:       xlsx.GetCellValue(sheet1Name, fmt.Sprintf("G%d", i+1)),
 				Qty:       qty,
 				Price:     price,
 				IsPayment: isPayment,
