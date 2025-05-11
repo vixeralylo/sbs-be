@@ -56,13 +56,14 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 		rows := xlsx.GetRows(sheet1Name)
 
 		for i := range rows {
-			fmt.Println("ORDER ID MASUK: ", i, xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i+1)))
+			fmt.Println("A: ", xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i))i, xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i+1)))
+			fmt.Println("B: ", xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i))i, xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)))
+			fmt.Println("C: ", xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i))i, xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i+1)))
+			fmt.Println("D: ", xlsx.GetCellValue(sheet1Name, fmt.Sprintf("D%d", i))i, xlsx.GetCellValue(sheet1Name, fmt.Sprintf("D%d", i+1)))
 			if i+1 < 3 || xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Canceled" {
-				fmt.Println("ORDER ID TIDAK DIPROSES: ", i, xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i+1)))
 				continue
 			}
 			
-			fmt.Println("ORDER ID DIPROSES: ", i, xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i+1)))
 			qty, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("J%d", i+1)))
 			if err != nil {
 				// ... handle error
