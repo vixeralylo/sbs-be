@@ -53,21 +53,15 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 	//TOKOPEDIA
 	if marketplace == "Tokopedia" {
 		sheet1Name := "OrderSKUList"
+		rows := xlsx.GetRows(sheet1Name)
 		sheetMap := xlsx.GetSheetMap()
-		for index, name := range sheetMap {
-			fmt.Printf("Sheet %d - %s:\n", index, name)
-			rows := xlsx.GetRows(name)
-			for i := 0; i < len(rows) && i < 5; i++ {
-				fmt.Printf("  Row %d: %v\n", i+1, rows[i])
-			}
-			fmt.Println()
-		}
+		fmt.Println("Available Sheets:", sheetMap)
 
 		for i := range rows {
 			if i+1 < 3 || xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Canceled" {
 				continue
 			}
-			
+
 			qty, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("J%d", i+1)))
 			if err != nil {
 				// ... handle error
