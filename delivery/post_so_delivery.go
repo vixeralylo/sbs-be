@@ -54,11 +54,9 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 	if marketplace == "Tokopedia" {
 		sheet1Name := "OrderSKUList"
 		rows := xlsx.GetRows(sheet1Name)
-		sheetMap := xlsx.GetSheetMap()
-		fmt.Println("Available Sheets:", sheetMap)
 
 		for i := range rows {
-			if i+1 < 3 || xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Canceled" {
+			if xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Canceled" {
 				continue
 			}
 
