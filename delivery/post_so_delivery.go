@@ -57,6 +57,10 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 		fmt.Println("Available Sheets:", sheetMap)
 
 		rows := xlsx.GetRows(sheet1Name)
+		ffmt.Printf("Total Rows in 'OrderSKUList': %d\n", len(rows))
+		for i, row := range rows {
+			fmt.Printf("Row %d: %v\n", i+1, row)
+		}
 
 		for i := range rows {
 			if i+1 < 3 || xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Canceled" {
