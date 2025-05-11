@@ -54,14 +54,18 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 	if marketplace == "Tokopedia" {
 		sheet1Name := "OrderSKUList"
 		rows := xlsx.GetRows(sheet1Name)
-
-		if len(rows) == 0 {
-			fmt.Println("No rows found in sheet:", sheet1Name)
-		}
 		
 		for i := range rows {
 			if i+1 < 3 || xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Canceled" {
 				continue
+			}
+
+			fmt.Println("Row", i+1) // Excel row number
+			if len(row) > 0 {
+				fmt.Println("A:", row[0]) // Column A
+			}
+			if len(row) > 1 {
+				fmt.Println("B:", row[1]) // Column B
 			}
 			
 			qty, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("J%d", i+1)))
