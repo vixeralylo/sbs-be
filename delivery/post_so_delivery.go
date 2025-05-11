@@ -55,7 +55,7 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 		sheet1Name := "OrderSKUList"
 		rows := xlsx.GetRows(sheet1Name)
 		
-		for i := range rows {
+		for i, row := range rows {
 			if i+1 < 3 || xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Canceled" {
 				continue
 			}
