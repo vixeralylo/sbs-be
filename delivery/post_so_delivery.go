@@ -64,7 +64,13 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 			if len(row) > 1 {
 				fmt.Println("B:", row[1]) // Column B
 			}
-			
+			if len(row) > 2 {
+				fmt.Println("C:", row[2]) // Column C
+			}
+			if len(row) > 3 {
+				fmt.Println("D:", row[3]) // Column D
+			}
+
 			if i+1 < 3 || xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Canceled" {
 				continue
 			}
