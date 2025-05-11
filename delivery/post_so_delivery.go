@@ -55,11 +55,8 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 		sheet1Name := "OrderSKUList"
 		rows := xlsx.GetRows(sheet1Name)
 
+		fmt.Println("rows: ", rows)
 		for i := range rows {
-			fmt.Println("A: ", xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i)), xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i+1)))
-			fmt.Println("B: ", xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i)), xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)))
-			fmt.Println("C: ", xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i)), xlsx.GetCellValue(sheet1Name, fmt.Sprintf("C%d", i+1)))
-			fmt.Println("D: ", xlsx.GetCellValue(sheet1Name, fmt.Sprintf("D%d", i)), xlsx.GetCellValue(sheet1Name, fmt.Sprintf("D%d", i+1)))
 			if i+1 < 3 || xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Canceled" {
 				continue
 			}
