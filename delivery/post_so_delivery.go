@@ -55,7 +55,10 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 		sheet1Name := "OrderSKUList"
 		rows := xlsx.GetRows(sheet1Name)
 
-		fmt.Println("rows: ", rows)
+		if len(rows) == 0 {
+			fmt.Println("No rows found in sheet:", sheet1Name)
+		}
+		
 		for i := range rows {
 			if i+1 < 3 || xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Canceled" {
 				continue
