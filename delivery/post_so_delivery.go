@@ -57,7 +57,7 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 		fmt.Println("Available Sheets:", sheetMap)
 
 		rows := xlsx.GetRows(sheet1Name)
-		ffmt.Printf("Total Rows in 'OrderSKUList': %d\n", len(rows))
+		fmt.Printf("Total Rows in 'OrderSKUList': %d\n", len(rows))
 		for i, row := range rows {
 			fmt.Printf("Row %d: %v\n", i+1, row)
 		}
