@@ -54,12 +54,13 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 	if marketplace == "Tokopedia" {
 		sheet1Name := "OrderSKUList"
 		sheetMap := xlsx.GetSheetMap()
-		fmt.Println("Available Sheets:", sheetMap)
-
-		rows := xlsx.GetRows(sheet1Name)
-		fmt.Printf("Total Rows in 'OrderSKUList': %d\n", len(rows))
-		for i, row := range rows {
-			fmt.Printf("Row %d: %v\n", i+1, row)
+		for index, name := range sheetMap {
+			fmt.Printf("Sheet %d - %s:\n", index, name)
+			rows := xlsx.GetRows(name)
+			for i := 0; i < len(rows) && i < 5; i++ {
+				fmt.Printf("  Row %d: %v\n", i+1, rows[i])
+			}
+			fmt.Println()
 		}
 
 		for i := range rows {
