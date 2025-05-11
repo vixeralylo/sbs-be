@@ -56,12 +56,13 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 		rows := xlsx.GetRows(sheet1Name)
 
 		for i := range rows {
-			fmt.Println("ORDER ID MASUK: ", xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i+1)))
+			fmt.Println("ORDER ID MASUK: ", i, xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i+1)))
 			if i+1 < 3 || xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Canceled" {
+				fmt.Println("ORDER ID TIDAK DIPROSES: ", i, xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i+1)))
 				continue
 			}
 			
-			fmt.Println("ORDER ID DIPROSES: ", xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i+1)))
+			fmt.Println("ORDER ID DIPROSES: ", i, xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i+1)))
 			qty, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("J%d", i+1)))
 			if err != nil {
 				// ... handle error
