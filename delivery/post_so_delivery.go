@@ -59,6 +59,9 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 			if xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Canceled" {
 				continue
 			}
+			if xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Unpaid" {
+				continue
+			}
 
 			qty, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("J%d", i+1)))
 			if err != nil {
