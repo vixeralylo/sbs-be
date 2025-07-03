@@ -56,7 +56,7 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 		rows := xlsx.GetRows(sheet1Name)
 
 		for i := range rows {
-			if xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Canceled" {
+			if xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Dibatalkan" {
 				continue
 			}
 			if xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Unpaid" {
