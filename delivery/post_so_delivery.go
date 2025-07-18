@@ -59,9 +59,6 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 			if xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Dibatalkan" {
 				continue
 			}
-			if xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Unpaid" {
-				continue
-			}
 
 			qty, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("J%d", i+1)))
 			if err != nil {
@@ -76,8 +73,8 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 			}
 
 			isPayment := true
-			if xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Belum Bayar" {
-				isPayment = false
+			if xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Belum dibayar" {
+				continue
 			}
 
 			// Assuming columns "A" and "B" for this example
