@@ -74,7 +74,7 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 
 			isPayment := true
 			if xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Belum dibayar" {
-				continue
+				isPayment = false
 			}
 
 			// Assuming columns "A" and "B" for this example
