@@ -89,6 +89,7 @@ type SbsSummaryDetail struct {
 	Pln             int     `json:"pln"`
 	TotalCost       int     `json:"total_cost"`
 	TotalAds        int     `json:"total_ads"`
+	TotalPotongan   int64   `json:"total_potongan"`
 	TotalLoss       int     `json:"total_loss"`
 	TotalTakeProfit int     `json:"total_take_profit"`
 	SumTotal        float32 `json:"sum_total"`

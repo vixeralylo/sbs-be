@@ -70,3 +70,22 @@ func (repository *sbsRepository) GetSoById(c context.Context, orderId string) ([
 
 	return results, nil
 }
+
+func (repository *sbsRepository) GetTotalSoPerMonth(c context.Context, monthYear string) (int64, error) {
+
+	if c.Err() == context.DeadlineExceeded {
+		return 0, c.Err()
+	}
+
+	var results []entity.SbsSalesOrder
+	var month = monthYear[4:]
+	var year = monthYear[0:4]
+
+	count := repository.mysqlConn.
+		Where("MONTH(order_date) = ?", month).
+		Where("YEAR(order_date) = ?", year).
+		Find(&results).
+		Group("invoice_no").RowsAffected
+
+	return count, nil
+}

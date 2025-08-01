@@ -76,6 +76,14 @@ func (usecase *sbsUsecase) GetSummary(c context.Context) *response.ResponseConta
 			return response.BuildInternalErrorResponse(constant.ERROR_CODE_DATABASE_ERROR, constant.RESPONSE_CODE_INTERNAL_ERROR, constant.RESPONSE_MESSAGE_DATABASE_ERROR, errSummaryLoss.Error())
 		}
 
+		//GET SUMMMARY POTONMGAN
+		resultSummaryPotongan, errSummaryPotongan := usecase.SbsRepository.GetTotalSoPerMonth(c, monthYear)
+		if errSummaryPotongan != nil && errSummaryPotongan.Error() == config.ErrRecordNotFound.Error() {
+			return response.BuildDataNotFoundResponse()
+		} else if errSummaryPotongan != nil {
+			return response.BuildInternalErrorResponse(constant.ERROR_CODE_DATABASE_ERROR, constant.RESPONSE_CODE_INTERNAL_ERROR, constant.RESPONSE_MESSAGE_DATABASE_ERROR, errSummaryPotongan.Error())
+		}
+
 		// Create a new SbsSummary instance for each month
 		t, err := time.Parse("20060102", monthYear+"01")
 		if err != nil {
@@ -90,6 +98,7 @@ func (usecase *sbsUsecase) GetSummary(c context.Context) *response.ResponseConta
 				GajiKaryawan:    resultSummaryGaji,
 				Pln:             resultSummaryPln,
 				TotalAds:        resultSummaryAds,
+				TotalPotongan:   resultSummaryPotongan * 1250,
 				TotalCost:       resultSummaryMaterial,
 				TotalTakeProfit: resultSummaryProfit,
 				TotalLoss:       resultSummaryLoss,

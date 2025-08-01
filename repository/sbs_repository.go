@@ -17,6 +17,7 @@ type SbsRepository interface {
 	AddSbsProduct(c context.Context, sku string, qty int) error
 	GetSo(c context.Context, filter dto.RequestSo) ([]entity.SbsSalesOrder, error)
 	GetSoById(c context.Context, orderId string) ([]entity.SbsSalesOrder, error)
+	GetTotalSoPerMonth(c context.Context, monthYear string) (int64, error)
 	UpdateSo(c context.Context, invoiceNo string) error
 	UpdateSoCancel(c context.Context, invoiceNo string) error
 	UpdateSoFlag(c context.Context, invoiceNo []string) error
