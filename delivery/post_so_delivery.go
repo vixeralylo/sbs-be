@@ -79,7 +79,7 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 
 			// Assuming columns "A" and "B" for this example
 			so := dto.RequestContainer{
-				OrderDate: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("AB%d", i+1))[6:10] + "-" + xlsx.GetCellValue(sheet1Name, fmt.Sprintf("AB%d", i+1))[3:5] + "-" + xlsx.GetCellValue(sheet1Name, fmt.Sprintf("AB%d", i+1))[0:2],
+				OrderDate: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("AD%d", i+1))[6:10] + "-" + xlsx.GetCellValue(sheet1Name, fmt.Sprintf("AD%d", i+1))[3:5] + "-" + xlsx.GetCellValue(sheet1Name, fmt.Sprintf("AD%d", i+1))[0:2],
 				InvoiceNo: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i+1)),
 				Sku:       xlsx.GetCellValue(sheet1Name, fmt.Sprintf("G%d", i+1)),
 				Qty:       qty,
