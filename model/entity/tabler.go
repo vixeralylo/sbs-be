@@ -1,10 +1,10 @@
 package entity
 
 const (
-	TABLE_PRODUCT        = "sbs_product"
-	TABLE_SALES_ORDER    = "sbs_sales_order"
-	TABLE_PURCHASE_ORDER = "sbs_purchase_order"
-	TABLE_COST           = "sbs_cost"
+	TABLE_PRODUCT        = "ibg_product"
+	TABLE_SALES_ORDER    = "ibg_sales_order"
+	TABLE_PURCHASE_ORDER = "ibg_purchase_order"
+	TABLE_COST           = "ibg_cost"
 )
 
 type Tabler interface {
