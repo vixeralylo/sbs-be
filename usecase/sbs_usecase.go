@@ -9,7 +9,8 @@ import (
 
 type SbsUsecase interface {
 	GetSbsProduct(c context.Context) *response.ResponseContainer
-	UpdateSbsProduct(c context.Context, sku string, qty string, hpp float64, price float64) *response.ResponseContainer
+	UpdateSbsProduct(c context.Context, sku string, qty string, seq string, hpp float64, price float64) *response.ResponseContainer
+	PostProduct(c context.Context, req dto.RequestAddProduct) *response.ResponseContainer
 	GetSo(c context.Context, filter dto.RequestSo) *response.ResponseContainer
 	PostSo(c context.Context, marketplace string, req []dto.RequestContainer) *response.ResponseContainer
 	PostSoManual(c context.Context, req dto.RequestSoManual) *response.ResponseContainer

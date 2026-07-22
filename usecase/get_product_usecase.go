@@ -21,41 +21,37 @@ func (usecase *sbsUsecase) GetSbsProduct(c context.Context) *response.ResponseCo
 		price := float64(product.Price)
 		hpp := float64(product.Hpp)
 		gross := price - hpp
-		adminTok := (product.AdminFeeTok / 100) * price
-		ongkirTok := (product.OngkirFeeTok / 100) * price
-		adminSho := (product.AdminFeeSho / 100) * price
-		ongkirSho := (product.OngkirFeeSho / 100) * price
-		cleanMarginTok := gross - adminTok - ongkirTok
-		cleanMarginSho := gross - adminSho - ongkirSho
+		admin := (product.AdminFee / 100) * price
+		ongkir := (product.OngkirFee / 100) * price
+		tax := (product.Tax / 100) * price
+		cleanMargin := gross - admin - ongkir - tax
 		stock, _ := strconv.ParseFloat(product.Stock, 64)
 
-		var pctTok, pctSho float64
-		if cleanMarginTok != 0 {
-			pctTok = toFixed((cleanMarginTok/hpp)*100, 2)
-			pctSho = toFixed((cleanMarginSho/hpp)*100, 2)
+		var pct float64
+		if cleanMargin != 0 {
+			pct = toFixed((cleanMargin/hpp)*100, 2)
 		} else {
-			pctTok = 0
-			pctSho = 0
+			pct = 0
 		}
 
 		sisaPersesiaan = sisaPersesiaan + (stock * hpp)
 
 		products := entity.SbsProduct{
-			Sku:            product.Sku,
-			ProductName:    product.ProductName,
-			Stock:          product.Stock,
-			Hpp:            product.Hpp,
-			Price:          product.Price,
-			Seq:            product.Seq,
-			Gross:          gross,
-			AdminFeeTok:    adminTok,
-			OngkirFeeTok:   ongkirTok,
-			AdminFeeSho:    adminSho,
-			OngkirFeeSho:   ongkirSho,
-			CleanMarginTok: cleanMarginTok,
-			CleanMarginSho: cleanMarginSho,
-			PctTok:         pctTok,
-			PctSho:         pctSho,
+			Sku:             product.Sku,
+			ProductName:     product.ProductName,
+			Stock:           product.Stock,
+			Hpp:             product.Hpp,
+			Price:           product.Price,
+			Seq:             product.Seq,
+			Gross:           gross,
+			AdminFee:        product.AdminFee,
+			OngkirFee:       product.OngkirFee,
+			Tax:             product.Tax,
+			AdminFeeAmount:  admin,
+			OngkirFeeAmount: ongkir,
+			TaxAmount:       tax,
+			CleanMargin:     cleanMargin,
+			Pct:             pct,
 		}
 		productList = append(productList, products)
 	}
