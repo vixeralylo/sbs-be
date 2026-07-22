@@ -12,16 +12,19 @@ type SbsRepository interface {
 	Ping() string
 	GetSbsProduct(c context.Context) ([]entity.SbsProduct, error)
 	GetSbsProductById(c context.Context, sku string) ([]entity.SbsProduct, error)
-	UpdateSbsProduct(c context.Context, sku string, qty int) error
+	UpdateSbsProduct(c context.Context, sku string, qty int, seq int, hpp float64, price float64) error
 	DeductSbsProduct(c context.Context, sku string, qty int) error
 	AddSbsProduct(c context.Context, sku string, qty int) error
 	GetSo(c context.Context, filter dto.RequestSo) ([]entity.SbsSalesOrder, error)
 	GetSoById(c context.Context, orderId string) ([]entity.SbsSalesOrder, error)
+	GetTotalSoPerMonth(c context.Context, monthYear string) (int64, error)
 	UpdateSo(c context.Context, invoiceNo string) error
 	UpdateSoCancel(c context.Context, invoiceNo string) error
 	UpdateSoFlag(c context.Context, invoiceNo []string) error
 	GetPo(c context.Context, filter dto.RequestPo) ([]entity.SbsPurchaseOrder, error)
+	GetPoById(c context.Context, filter dto.RequestPo) ([]entity.SbsPurchaseOrder, error)
 	PostSo(c context.Context, salesOrder entity.SbsSalesOrder) error
+	PostProduct(c context.Context, product entity.SbsProduct) error
 	PostPo(c context.Context, purchasesOrder entity.SbsPurchaseOrder) error
 	GetSearchProduct(c context.Context, str string) ([]entity.SbsProduct, error)
 	UpdatePo(c context.Context, poNo string) error
@@ -29,6 +32,7 @@ type SbsRepository interface {
 	PostCost(c context.Context, filter entity.SbsCost) error
 	GetSummarySo(c context.Context, monthYear string) (float32, error)
 	GetSummaryCost(c context.Context, monthYear string, costType string) (int, error)
+	DeletePo(c context.Context, poNo string, sku string) error
 }
 
 type sbsRepository struct {

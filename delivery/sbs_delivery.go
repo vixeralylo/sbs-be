@@ -12,6 +12,7 @@ import (
 type SbsDelivery interface {
 	GetSbsProduct(c *gin.Context)
 	UpdateSbsProduct(c *gin.Context)
+	PostProduct(c *gin.Context)
 	GetSo(c *gin.Context)
 	PostSo(c *gin.Context)
 	PostSoManual(c *gin.Context)
@@ -21,6 +22,7 @@ type SbsDelivery interface {
 	GetSearchProduct(c *gin.Context)
 	DeleteSo(c *gin.Context)
 	UpdatePo(c *gin.Context)
+	DeletePo(c *gin.Context)
 	GetCost(c *gin.Context)
 	PostCost(c *gin.Context)
 	GetSummary(c *gin.Context)

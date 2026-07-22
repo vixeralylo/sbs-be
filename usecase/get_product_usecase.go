@@ -21,9 +21,10 @@ func (usecase *sbsUsecase) GetSbsProduct(c context.Context) *response.ResponseCo
 		price := float64(product.Price)
 		hpp := float64(product.Hpp)
 		gross := price - hpp
-		admin := 0.045 * price
-		ongkir := 0.04 * price
-		cleanMargin := gross - admin - ongkir
+		admin := (product.AdminFee / 100) * price
+		ongkir := (product.OngkirFee / 100) * price
+		tax := (product.Tax / 100) * price
+		cleanMargin := gross - admin - ongkir - tax
 		stock, _ := strconv.ParseFloat(product.Stock, 64)
 
 		var pct float64
@@ -36,17 +37,21 @@ func (usecase *sbsUsecase) GetSbsProduct(c context.Context) *response.ResponseCo
 		sisaPersesiaan = sisaPersesiaan + (stock * hpp)
 
 		products := entity.SbsProduct{
-			Sku:         product.Sku,
-			ProductName: product.ProductName,
-			Stock:       product.Stock,
-			Hpp:         product.Hpp,
-			Price:       product.Price,
-			Seq:         product.Seq,
-			Gross:       gross,
-			Admin:       admin,
-			Ongkir:      ongkir,
-			CleanMargin: cleanMargin,
-			Pct:         pct,
+			Sku:             product.Sku,
+			ProductName:     product.ProductName,
+			Stock:           product.Stock,
+			Hpp:             product.Hpp,
+			Price:           product.Price,
+			Seq:             product.Seq,
+			Gross:           gross,
+			AdminFee:        product.AdminFee,
+			OngkirFee:       product.OngkirFee,
+			Tax:             product.Tax,
+			AdminFeeAmount:  admin,
+			OngkirFeeAmount: ongkir,
+			TaxAmount:       tax,
+			CleanMargin:     cleanMargin,
+			Pct:             pct,
 		}
 		productList = append(productList, products)
 	}

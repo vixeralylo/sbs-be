@@ -20,7 +20,7 @@ func (repository *sbsRepository) GetCost(c context.Context, filter dto.RequestCo
 	dbTemp := repository.mysqlConn.Table(entity.TABLE_COST)
 
 	if len(start_date) > 0 && len(end_date) > 0 {
-		dbTemp = dbTemp.Where("date BETWEEN ? AND ?", start_date, end_date)
+		dbTemp = dbTemp.Where("date BETWEEN ? AND ?", start_date, end_date).Order("date")
 	}
 
 	err := dbTemp.Find(&results).Error

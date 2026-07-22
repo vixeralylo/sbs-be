@@ -5,19 +5,21 @@ type SbsProductResponse struct {
 	SbsProductList []SbsProduct
 }
 type SbsProduct struct {
-	Sku         string  `json:"sku" gorm:"column:sku;primary_key;"`
-	ProductName string  `json:"product_name" gorm:"column:product_name;"`
-	Stock       string  `json:"stock" gorm:"column:stock;"`
-	Hpp         int     `json:"hpp" gorm:"column:hpp;"`
-	Price       float64 `json:"price" gorm:"column:price;"`
-	BrandId     string  `json:"brand_id" gorm:"column:brand_id;"`
-	SupplierId  string  `json:"supplier_id" gorm:"column:supplier_id;"`
-	Seq         string  `json:"seq" gorm:"column:seq;"`
-	Gross       float64 `json:"gross"`
-	Admin       float64 `json:"admin"`
-	Ongkir      float64 `json:"ongkir"`
-	CleanMargin float64 `json:"clean_margin"`
-	Pct         float64 `json:"pct"`
+	Sku             string  `json:"sku" gorm:"column:sku;primary_key;"`
+	ProductName     string  `json:"product_name" gorm:"column:product_name;"`
+	Stock           string  `json:"stock" gorm:"column:stock;"`
+	Hpp             int     `json:"hpp" gorm:"column:hpp;"`
+	Price           float64 `json:"price" gorm:"column:price;"`
+	AdminFee        float64 `json:"admin_fee" gorm:"column:admin_fee;"`
+	OngkirFee       float64 `json:"ongkir_fee" gorm:"column:ongkir_fee;"`
+	Tax             float64 `json:"tax" gorm:"column:tax;"`
+	Seq             int     `json:"seq" gorm:"column:seq;"`
+	Gross           float64 `json:"gross" gorm:"-"`
+	AdminFeeAmount  float64 `json:"admin_fee_amount" gorm:"-"`
+	OngkirFeeAmount float64 `json:"ongkir_fee_amount" gorm:"-"`
+	TaxAmount       float64 `json:"tax_amount" gorm:"-"`
+	CleanMargin     float64 `json:"clean_margin" gorm:"-"`
+	Pct             float64 `json:"pct" gorm:"-"`
 }
 
 type SbsSalesOrderResponse struct {
@@ -27,6 +29,7 @@ type SbsSalesOrderResponse struct {
 	SumMargin      float64 `json:"sum_margin"`
 	SumAdmin       float64 `json:"sum_admin"`
 	SumOngkir      float64 `json:"sum_ongkir"`
+	SumTax         float64 `json:"sum_tax"`
 	SumCleanMargin float64 `json:"sum_clean_margin"`
 	SbsOrderList   []SbsSalesOrder
 }
@@ -44,9 +47,11 @@ type SbsSalesOrder struct {
 	GrossMargin      int     `json:"gross_margin" gorm:"column:gross_margin;"`
 	PowerMerchantFee float32 `json:"power_merchant_fee" gorm:"column:power_merchant_fee;"`
 	OngkirFee        float32 `json:"ongkir_fee" gorm:"column:ongkir_fee;"`
+	Tax              float32 `json:"tax" gorm:"column:tax;"`
 	CleanMargin      float32 `json:"clean_margin" gorm:"column:clean_margin;"`
 	Flag             bool    `json:"flag" gorm:"column:flag;"`
 	IsPayment        bool    `json:"is_payment" gorm:"column:is_payment;"`
+	IsCancel         bool    `json:"is_cancel" gorm:"column:is_cancel;"`
 }
 
 type SbsPurchaseOrder struct {
@@ -86,6 +91,8 @@ type SbsSummaryDetail struct {
 	Pln             int     `json:"pln"`
 	TotalCost       int     `json:"total_cost"`
 	TotalAds        int     `json:"total_ads"`
+	Affiliate       int     `json:"sum_affiliate"`
+	TotalPotongan   int64   `json:"total_potongan"`
 	TotalLoss       int     `json:"total_loss"`
 	TotalTakeProfit int     `json:"total_take_profit"`
 	SumTotal        float32 `json:"sum_total"`

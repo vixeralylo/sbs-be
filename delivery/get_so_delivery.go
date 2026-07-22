@@ -9,11 +9,18 @@ import (
 
 func (delivery *sbsDelivery) GetSo(c *gin.Context) {
 
-	marketplace_id := c.GetHeader("marketplace_id")
-	start_date := c.GetHeader("start_date")
-	end_date := c.GetHeader("end_date")
-	invoice_no := c.GetHeader("invoice_no")
-	is_not_payment := c.GetHeader("is_not_payment")
+	var reqBody dto.RequestBody
+	// Bind JSON request body to struct
+	if err := c.ShouldBindJSON(&reqBody); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
+	marketplace_id := reqBody.MarketplaceId
+	start_date := reqBody.StartDate
+	end_date := reqBody.EndDate
+	is_not_payment := reqBody.IsNotPayment
+	invoice_no := reqBody.InvoiceNo
 
 	filter := dto.RequestSo{
 		MarketplaceId: marketplace_id,

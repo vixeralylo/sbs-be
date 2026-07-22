@@ -60,6 +60,14 @@ func (usecase *sbsUsecase) GetSummary(c context.Context) *response.ResponseConta
 			return response.BuildInternalErrorResponse(constant.ERROR_CODE_DATABASE_ERROR, constant.RESPONSE_CODE_INTERNAL_ERROR, constant.RESPONSE_MESSAGE_DATABASE_ERROR, errSummaryMaterial.Error())
 		}
 
+		//GET SUMMMARY AFFILIATE
+		resultSummaryAffiliate, errSummaryAffiliate := usecase.SbsRepository.GetSummaryCost(c, monthYear, "Affiliate")
+		if errSummaryAffiliate != nil && errSummaryAffiliate.Error() == config.ErrRecordNotFound.Error() {
+			return response.BuildDataNotFoundResponse()
+		} else if errSummaryAffiliate != nil {
+			return response.BuildInternalErrorResponse(constant.ERROR_CODE_DATABASE_ERROR, constant.RESPONSE_CODE_INTERNAL_ERROR, constant.RESPONSE_MESSAGE_DATABASE_ERROR, errSummaryAffiliate.Error())
+		}
+
 		//GET SUMMMARY TAKE PROFIT
 		resultSummaryProfit, errSummaryProfit := usecase.SbsRepository.GetSummaryCost(c, monthYear, "Profit")
 		if errSummaryProfit != nil && errSummaryProfit.Error() == config.ErrRecordNotFound.Error() {
@@ -76,6 +84,14 @@ func (usecase *sbsUsecase) GetSummary(c context.Context) *response.ResponseConta
 			return response.BuildInternalErrorResponse(constant.ERROR_CODE_DATABASE_ERROR, constant.RESPONSE_CODE_INTERNAL_ERROR, constant.RESPONSE_MESSAGE_DATABASE_ERROR, errSummaryLoss.Error())
 		}
 
+		//GET SUMMMARY POTONMGAN
+		resultSummaryPotongan, errSummaryPotongan := usecase.SbsRepository.GetTotalSoPerMonth(c, monthYear)
+		if errSummaryPotongan != nil && errSummaryPotongan.Error() == config.ErrRecordNotFound.Error() {
+			return response.BuildDataNotFoundResponse()
+		} else if errSummaryPotongan != nil {
+			return response.BuildInternalErrorResponse(constant.ERROR_CODE_DATABASE_ERROR, constant.RESPONSE_CODE_INTERNAL_ERROR, constant.RESPONSE_MESSAGE_DATABASE_ERROR, errSummaryPotongan.Error())
+		}
+
 		// Create a new SbsSummary instance for each month
 		t, err := time.Parse("20060102", monthYear+"01")
 		if err != nil {
@@ -90,10 +106,12 @@ func (usecase *sbsUsecase) GetSummary(c context.Context) *response.ResponseConta
 				GajiKaryawan:    resultSummaryGaji,
 				Pln:             resultSummaryPln,
 				TotalAds:        resultSummaryAds,
+				Affiliate:       resultSummaryAffiliate,
+				TotalPotongan:   resultSummaryPotongan * 1250,
 				TotalCost:       resultSummaryMaterial,
 				TotalTakeProfit: resultSummaryProfit,
 				TotalLoss:       resultSummaryLoss,
-				SumTotal:        resultSummarySo - float32(resultSummaryGaji) - float32(resultSummaryPln) - float32(resultSummaryAds) - float32(resultSummaryMaterial) - float32(resultSummaryProfit) - float32(resultSummaryLoss),
+				SumTotal:        resultSummarySo - float32(resultSummaryGaji) - float32(resultSummaryPln) - float32(resultSummaryAds) - float32(resultSummaryAffiliate) - float32(resultSummaryMaterial) - float32(resultSummaryProfit) - float32(resultSummaryLoss),
 			},
 		}
 		// Append the SbsSummary to the slice

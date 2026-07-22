@@ -37,22 +37,24 @@ func (repository *sbsRepository) GetSummaryCost(c context.Context, monthYear str
 		return 0, c.Err()
 	}
 
-	var results entity.SbsSalesOrder
+	var result struct {
+		Total float64 `gorm:"column:total"`
+	}
 	var month = monthYear[4:]
 	var year = monthYear[0:4]
 
 	dbTemp := repository.mysqlConn.
 		Table(entity.TABLE_COST).
-		Select("SUM(total_price) as total_price").
+		Select("COALESCE(SUM(total_price), 0) as total").
 		Where("MONTH(date) = ?", month).
 		Where("YEAR(date) = ?", year).
 		Where("cost_type = ?", costType)
 
-	err := dbTemp.Find(&results).Error
+	err := dbTemp.Scan(&result).Error
 
 	if err != nil {
 		return 0, err
 	}
 
-	return results.TotalPrice, nil
+	return int(result.Total), nil
 }

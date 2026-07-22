@@ -7,7 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (delivery *sbsDelivery) DeleteSo(c *gin.Context) {
+func (delivery *sbsDelivery) DeletePo(c *gin.Context) {
+
 	var reqBody dto.RequestBody
 	// Bind JSON request body to struct
 	if err := c.ShouldBindJSON(&reqBody); err != nil {
@@ -16,9 +17,10 @@ func (delivery *sbsDelivery) DeleteSo(c *gin.Context) {
 	}
 
 	// Access values
-	invoiceNo := reqBody.InvoiceNo
+	poNo := reqBody.PoNo
+	sku := reqBody.Sku
 
-	data := delivery.SbsUsecase.DeleteSo(c, invoiceNo)
+	data := delivery.SbsUsecase.DeletePo(c, poNo, sku)
 
 	if data.StatusCode >= 400 && data.StatusCode != http.StatusNotFound {
 		c.JSON(data.StatusCode, data)

@@ -25,6 +25,7 @@ func (usecase *sbsUsecase) GetSo(c context.Context, filter dto.RequestSo) *respo
 	var sumMargin float64
 	var sumAdmin float64
 	var sumOngkir float64
+	var sumTax float64
 	var sumCleanMargin float64
 
 	for _, order := range resultOrder {
@@ -34,6 +35,7 @@ func (usecase *sbsUsecase) GetSo(c context.Context, filter dto.RequestSo) *respo
 		sumMargin = sumMargin + float64(order.GrossMargin)
 		sumAdmin = sumAdmin + float64(order.PowerMerchantFee)
 		sumOngkir = sumOngkir + float64(order.OngkirFee)
+		sumTax = sumTax + float64(order.Tax)
 		sumCleanMargin = sumCleanMargin + float64(order.CleanMargin)
 	}
 
@@ -44,6 +46,7 @@ func (usecase *sbsUsecase) GetSo(c context.Context, filter dto.RequestSo) *respo
 		SumMargin:      sumMargin,
 		SumAdmin:       sumAdmin,
 		SumOngkir:      sumOngkir,
+		SumTax:         sumTax,
 		SumCleanMargin: sumCleanMargin,
 		SbsOrderList:   resultOrder,
 	}

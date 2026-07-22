@@ -62,6 +62,7 @@ func (usecase *sbsUsecase) PostSoManual(c context.Context, req dto.RequestSoManu
 		GrossMargin:      grossMargin,
 		PowerMerchantFee: 0,
 		OngkirFee:        0,
+		Tax:              0,
 		CleanMargin:      cleanMargin,
 		Flag:             true,
 		IsPayment:        true,

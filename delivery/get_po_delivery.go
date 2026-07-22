@@ -8,10 +8,17 @@ import (
 )
 
 func (delivery *sbsDelivery) GetPo(c *gin.Context) {
+	var reqBody dto.RequestBody
+	// Bind JSON request body to struct
+	if err := c.ShouldBindJSON(&reqBody); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
 
-	start_date := c.GetHeader("start_date")
-	end_date := c.GetHeader("end_date")
-	is_not_payment := c.GetHeader("is_not_payment")
+	// Access values
+	start_date := reqBody.StartDate
+	end_date := reqBody.EndDate
+	is_not_payment := reqBody.IsNotPayment
 
 	filter := dto.RequestPo{
 		StartDate:    start_date,

@@ -16,20 +16,20 @@ var env = map[string]map[string]string{
 	// local environment configuration
 	"local": {
 		"PIPELINE":     LOCAL,
-		"PORT":         "8888",
-		"MYSQL_HOST":   "localhost",
-		"MYSQL_PORT":   "3307",
+		"PORT":         "8080",
+		"MYSQL_HOST":   "127.0.0.1",
+		"MYSQL_PORT":   "3306",
 		"MYSQL_USER":   "root",
 		"MYSQL_PASS":   "root",
 		"MYSQL_SCHEMA": "sbs",
 	},
 	"production": {
 		"PIPELINE":     PRODUCTION,
-		"PORT":         "8888",
-		"MYSQL_HOST":   "mysql-db",
-		"MYSQL_PORT":   "3307",
+		"PORT":         "8080",
+		"MYSQL_HOST":   "127.0.0.1",
+		"MYSQL_PORT":   "3306",
 		"MYSQL_USER":   "root",
-		"MYSQL_PASS":   "admin",
+		"MYSQL_PASS":   "root",
 		"MYSQL_SCHEMA": "sbs",
 	},
 }

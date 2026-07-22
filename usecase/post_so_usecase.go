@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"fmt"
 
 	"sbs-be/config"
 	"sbs-be/model/constant"
@@ -14,16 +15,8 @@ func (usecase *sbsUsecase) PostSo(c context.Context, marketplace string, req []d
 
 	var pwMerchantPct float32
 	var ongkirPct float32
+	var taxPct float32
 	var tempDistinct []string
-
-	if marketplace == "Tokopedia" {
-		pwMerchantPct = 0.045
-		ongkirPct = 0.04
-	}
-	if marketplace == "Shopee" {
-		pwMerchantPct = 0.04
-		ongkirPct = 0.04
-	}
 
 	for _, saleOrder := range req {
 
@@ -50,13 +43,21 @@ func (usecase *sbsUsecase) PostSo(c context.Context, marketplace string, req []d
 		} else {
 			hpp = productById[0].Hpp
 			productName = productById[0].ProductName
-		}
 
+			pwMerchantPct = float32(productById[0].AdminFee / 100)
+			ongkirPct = float32(productById[0].OngkirFee / 100)
+			taxPct = float32(productById[0].Tax / 100)
+		}
+		fmt.Println("PW MERCHANT : ", pwMerchantPct)
 		totalPrice := saleOrder.Qty * saleOrder.Price
+		fmt.Println("TOTAL PRICE 1 : ", totalPrice)
 		pwMerchantFee := pwMerchantPct * float32(totalPrice)
+		fmt.Println("TOTAL PRICE : ", float32(totalPrice))
+		fmt.Println("PW MERCHANT FEE : ", pwMerchantFee)
 		ongkirFee := ongkirPct * float32(totalPrice)
+		taxFee := taxPct * float32(totalPrice)
 		grossMargin := totalPrice - (hpp * saleOrder.Qty)
-		cleanMargin := float32(grossMargin) - pwMerchantFee - ongkirFee
+		cleanMargin := float32(grossMargin) - pwMerchantFee - ongkirFee - taxFee
 
 		salesOrder := entity.SbsSalesOrder{
 			MarketPlaceId:    marketplace,
@@ -71,8 +72,10 @@ func (usecase *sbsUsecase) PostSo(c context.Context, marketplace string, req []d
 			GrossMargin:      grossMargin,
 			PowerMerchantFee: pwMerchantFee,
 			OngkirFee:        ongkirFee,
+			Tax:              taxFee,
 			CleanMargin:      cleanMargin,
 			IsPayment:        saleOrder.IsPayment,
+			IsCancel:         false,
 		}
 
 		errInsert := usecase.SbsRepository.PostSo(c, salesOrder)
@@ -92,6 +95,11 @@ func (usecase *sbsUsecase) PostSo(c context.Context, marketplace string, req []d
 		}
 
 		tempDistinct = append(tempDistinct, salesOrder.InvoiceNo)
+	}
+
+	// tidak ada order baru yang di-insert (file kosong / semua sudah ada di DB)
+	if len(tempDistinct) == 0 {
+		return response.BuildSuccessResponse(nil)
 	}
 
 	errUpdateFlag := usecase.SbsRepository.UpdateSoFlag(c, tempDistinct)
