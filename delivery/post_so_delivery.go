@@ -2,14 +2,12 @@ package delivery
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"regexp"
 	"sbs-be/model/dto"
 	"strconv"
 	"strings"
 
-	"github.com/360EntSecGroup-Skylar/excelize"
 	"github.com/gin-gonic/gin"
 )
 
@@ -41,47 +39,52 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 		return
 	}
 
-	var saleOrders []dto.RequestContainer
-	var qty int
-	var price int
-
-	xlsx, err := excelize.OpenFile(uploadPath)
-	if err != nil {
-		log.Fatal("ERROR", err.Error())
+	var sheetName string
+	if marketplace == "Tokopedia" {
+		sheetName = "OrderSKUList"
+	} else {
+		sheetName = "orders"
 	}
+
+	// Baca sel per-koordinat, tahan terhadap struktur XML tidak standar (mis. export TikTok)
+	cells, maxRow, err := readSheetCells(uploadPath, sheetName)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read excel: " + err.Error()})
+		return
+	}
+
+	get := func(col string, row int) string {
+		return strings.TrimSpace(cells[fmt.Sprintf("%s%d", col, row)])
+	}
+
+	var saleOrders []dto.RequestContainer
 
 	//TOKOPEDIA
 	if marketplace == "Tokopedia" {
-		sheet1Name := "OrderSKUList"
-		rows := xlsx.GetRows(sheet1Name)
-
-		for i := range rows {
-			if xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Dibatalkan" {
+		// baris 1 = header kolom, baris 2 = keterangan kolom, data mulai baris 3
+		for r := 3; r <= maxRow; r++ {
+			invoice := get("A", r)
+			status := get("B", r)
+			if invoice == "" || status == "Dibatalkan" {
 				continue
 			}
 
-			qty, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("J%d", i+1)))
-			if err != nil {
-				// ... handle error
-				panic(err)
-			}
-
-			price, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("L%d", i+1)))
-			if err != nil {
-				// ... handle error
-				panic(err)
+			qty, err1 := strconv.Atoi(get("J", r))
+			price, err2 := strconv.Atoi(get("L", r))
+			orderDate := get("AD", r)
+			if err1 != nil || err2 != nil || len(orderDate) < 10 {
+				continue
 			}
 
 			isPayment := true
-			if xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Belum dibayar" {
+			if status == "Belum dibayar" {
 				isPayment = false
 			}
 
-			// Assuming columns "A" and "B" for this example
 			so := dto.RequestContainer{
-				OrderDate: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("AD%d", i+1))[6:10] + "-" + xlsx.GetCellValue(sheet1Name, fmt.Sprintf("AD%d", i+1))[3:5] + "-" + xlsx.GetCellValue(sheet1Name, fmt.Sprintf("AD%d", i+1))[0:2],
-				InvoiceNo: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i+1)),
-				Sku:       xlsx.GetCellValue(sheet1Name, fmt.Sprintf("G%d", i+1)),
+				OrderDate: orderDate[6:10] + "-" + orderDate[3:5] + "-" + orderDate[0:2],
+				InvoiceNo: invoice,
+				Sku:       get("G", r),
 				Qty:       qty,
 				Price:     price,
 				IsPayment: isPayment,
@@ -92,36 +95,31 @@ func (delivery *sbsDelivery) PostSo(c *gin.Context) {
 
 	//SHOPEE
 	if marketplace == "Shopee" {
-		sheet1Name := "orders"
-		rows := xlsx.GetRows(sheet1Name)
-
-		for i := range rows {
-			if i+1 < 2 || xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Batal" {
+		// baris 1 = header, data mulai baris 2
+		for r := 2; r <= maxRow; r++ {
+			invoice := get("A", r)
+			status := get("B", r)
+			if invoice == "" || status == "Batal" {
 				continue
 			}
 
-			qty, err = strconv.Atoi(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("S%d", i+1)))
-			if err != nil {
-				// ... handle error
-				panic(err)
-			}
-
-			price, err = strconv.Atoi(regexp.MustCompile(`[^a-zA-Z0-9 ]+`).ReplaceAllString(xlsx.GetCellValue(sheet1Name, fmt.Sprintf("R%d", i+1)), ""))
-			if err != nil {
-				// ... handle error
-				panic(err)
+			qty, err1 := strconv.Atoi(get("S", r))
+			priceClean := regexp.MustCompile(`[^a-zA-Z0-9 ]+`).ReplaceAllString(get("R", r), "")
+			price, err2 := strconv.Atoi(priceClean)
+			orderDate := get("J", r)
+			if err1 != nil || err2 != nil || len(orderDate) < 10 {
+				continue
 			}
 
 			isPayment := true
-			if xlsx.GetCellValue(sheet1Name, fmt.Sprintf("B%d", i+1)) == "Belum Bayar" {
+			if status == "Belum Bayar" {
 				isPayment = false
 			}
 
-			// Assuming columns "A" and "B" for this example
 			so := dto.RequestContainer{
-				OrderDate: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("J%d", i+1))[0:10],
-				InvoiceNo: xlsx.GetCellValue(sheet1Name, fmt.Sprintf("A%d", i+1)),
-				Sku:       xlsx.GetCellValue(sheet1Name, fmt.Sprintf("O%d", i+1)),
+				OrderDate: orderDate[0:10],
+				InvoiceNo: invoice,
+				Sku:       get("O", r),
 				Qty:       qty,
 				Price:     price,
 				IsPayment: isPayment,

@@ -8,7 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func (repository *sbsRepository) UpdateSbsProduct(c context.Context, sku string, qty int, hpp float64, price float64) error {
+func (repository *sbsRepository) UpdateSbsProduct(c context.Context, sku string, qty int, seq int, hpp float64, price float64) error {
 
 	if c.Err() == context.DeadlineExceeded {
 		return c.Err()
@@ -16,7 +16,7 @@ func (repository *sbsRepository) UpdateSbsProduct(c context.Context, sku string,
 
 	var results entity.SbsProduct
 
-	err := repository.mysqlConn.Model(&results).Where("sku = ?", sku).Update("stock", qty).Update("hpp", hpp).Update("price", price).Error
+	err := repository.mysqlConn.Model(&results).Where("sku = ?", sku).Update("stock", qty).Update("hpp", hpp).Update("price", price).Update("seq", seq).Error
 	if err != nil {
 		return err
 	}

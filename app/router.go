@@ -25,6 +25,7 @@ func InitRouter(
 	svc := router.Group("/api")
 	svc.POST("/product/get", sbsDelivery.GetSbsProduct)
 	svc.POST("/product/put", sbsDelivery.UpdateSbsProduct)
+	svc.POST("/product/post", sbsDelivery.PostProduct)
 	svc.POST("/so/get", sbsDelivery.GetSo)
 	svc.POST("/so/post", sbsDelivery.PostSo)
 	svc.POST("/so_manual/post", sbsDelivery.PostSoManual)
