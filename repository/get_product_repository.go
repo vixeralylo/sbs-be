@@ -14,7 +14,7 @@ func (repository *sbsRepository) GetSbsProduct(c context.Context) ([]entity.SbsP
 
 	var results []entity.SbsProduct
 
-	err := repository.mysqlConn.Order("seq asc").Find(&results).Error
+	err := repository.mysqlConn.Where("is_deleted = 0 OR is_deleted IS NULL").Order("seq asc").Find(&results).Error
 	if err != nil {
 		return nil, err
 	}

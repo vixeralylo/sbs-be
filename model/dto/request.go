@@ -83,6 +83,9 @@ type RequestBody struct {
 	Qty           string `json:"qty"`
 	Hpp           string `json:"hpp"`
 	Price         string `json:"price"`
+	AdminFee      string `json:"admin_fee"`
+	OngkirFee     string `json:"ongkir_fee"`
+	Tax           string `json:"tax"`
 	AddedPrice    string `json:"added_price"`
 	TotalPrice    string `json:"total_price"`
 	SoDate        string `json:"so_date"`

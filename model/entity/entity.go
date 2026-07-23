@@ -14,6 +14,7 @@ type SbsProduct struct {
 	OngkirFee       float64 `json:"ongkir_fee" gorm:"column:ongkir_fee;"`
 	Tax             float64 `json:"tax" gorm:"column:tax;"`
 	Seq             int     `json:"seq" gorm:"column:seq;"`
+	IsDeleted       bool    `json:"is_deleted" gorm:"column:is_deleted;"`
 	Gross           float64 `json:"gross" gorm:"-"`
 	AdminFeeAmount  float64 `json:"admin_fee_amount" gorm:"-"`
 	OngkirFeeAmount float64 `json:"ongkir_fee_amount" gorm:"-"`

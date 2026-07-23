@@ -12,7 +12,7 @@ type SbsRepository interface {
 	Ping() string
 	GetSbsProduct(c context.Context) ([]entity.SbsProduct, error)
 	GetSbsProductById(c context.Context, sku string) ([]entity.SbsProduct, error)
-	UpdateSbsProduct(c context.Context, sku string, qty int, seq int, hpp float64, price float64) error
+	UpdateSbsProduct(c context.Context, sku string, qty int, seq int, hpp float64, price float64, adminFee float64, ongkirFee float64, tax float64) error
 	DeductSbsProduct(c context.Context, sku string, qty int) error
 	AddSbsProduct(c context.Context, sku string, qty int) error
 	GetSo(c context.Context, filter dto.RequestSo) ([]entity.SbsSalesOrder, error)
