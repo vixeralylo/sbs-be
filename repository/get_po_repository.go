@@ -24,16 +24,9 @@ func (repository *sbsRepository) GetPo(c context.Context, filter dto.RequestPo) 
 		dbTemp = dbTemp.Where("po_date BETWEEN ? AND ?", start_date, end_date)
 	}
 
+	// default: tampilkan semua; jika ada flag is_not_payment, hanya yang belum dibayar
 	if len(is_not_payment) > 0 {
-
-		var isNotPayment bool
-		if is_not_payment == "true" {
-			isNotPayment = true
-		} else {
-			isNotPayment = false
-		}
-
-		dbTemp = dbTemp.Where("is_payment = ?", isNotPayment)
+		dbTemp = dbTemp.Where("is_payment = ?", false)
 	}
 
 	err := dbTemp.Find(&results).Error
