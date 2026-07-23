@@ -20,6 +20,7 @@ type SbsRepository interface {
 	GetTotalSoPerMonth(c context.Context, monthYear string) (int64, error)
 	UpdateSo(c context.Context, invoiceNo string) error
 	UpdateSoCancel(c context.Context, invoiceNo string) error
+	CancelSo(c context.Context, invoiceNo string) error
 	UpdateSoFlag(c context.Context, invoiceNo []string) error
 	GetPo(c context.Context, filter dto.RequestPo) ([]entity.SbsPurchaseOrder, error)
 	GetPoById(c context.Context, filter dto.RequestPo) ([]entity.SbsPurchaseOrder, error)
