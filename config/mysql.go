@@ -16,6 +16,7 @@ var ErrRecordNotFound = errors.New("record not found")
 
 func ConnectMySQL() (*gorm.DB, error) {
 	connectionString := "sbs_user:sbs_password@tcp(103.175.218.193:3307)/sbs?parseTime=true&loc=Local"
+	// connectionString := "root:admin@tcp(localhost:3306)/sbs?parseTime=true&loc=Local"
 
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer

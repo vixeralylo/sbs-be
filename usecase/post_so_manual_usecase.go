@@ -49,10 +49,15 @@ func (usecase *sbsUsecase) PostSoManual(c context.Context, req dto.RequestSoManu
 	grossMargin := totalPrice - (hpp * qty)
 	cleanMargin := float32(grossMargin)
 
+	invoiceNo := req.InvoiceNo
+	if invoiceNo == "" {
+		invoiceNo = "-"
+	}
+
 	salesOrder := entity.SbsSalesOrder{
 		MarketPlaceId:    req.MarketplaceId,
 		OrderDate:        req.OrderDate,
-		InvoiceNo:        "-",
+		InvoiceNo:        invoiceNo,
 		Sku:              req.Sku,
 		ProductName:      productName,
 		Qty:              qty,

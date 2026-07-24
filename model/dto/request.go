@@ -39,6 +39,7 @@ type RequestSoManual struct {
 	Qty           string `json:"qty"`
 	Price         string `json:"Price"`
 	SoNumber      string `json:"so_number"`
+	InvoiceNo     string `json:"invoice_no"`
 	TotalPrice    string `json:"total_price"`
 }
 
