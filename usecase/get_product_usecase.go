@@ -11,9 +11,9 @@ import (
 	"sbs-be/model/response"
 )
 
-func (usecase *sbsUsecase) GetSbsProduct(c context.Context) *response.ResponseContainer {
+func (usecase *sbsUsecase) GetSbsProduct(c context.Context, showDeleted bool) *response.ResponseContainer {
 
-	resultProduct, err := usecase.SbsRepository.GetSbsProduct(c)
+	resultProduct, err := usecase.SbsRepository.GetSbsProduct(c, showDeleted)
 	var productList []entity.SbsProduct
 	var sisaPersesiaan float64
 

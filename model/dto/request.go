@@ -90,4 +90,5 @@ type RequestBody struct {
 	TotalPrice    string `json:"total_price"`
 	SoDate        string `json:"so_date"`
 	Seq           string `json:"seq"`
+	IsDeleted     bool   `json:"is_deleted"`
 }

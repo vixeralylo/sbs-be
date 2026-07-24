@@ -27,6 +27,7 @@ func (delivery *sbsDelivery) UpdateSbsProduct(c *gin.Context) {
 	adminFee := reqBody.AdminFee
 	ongkirFee := reqBody.OngkirFee
 	tax := reqBody.Tax
+	isDeleted := reqBody.IsDeleted
 
 	// Convert string to float32
 	hppConvert, err := strconv.ParseFloat(hpp, 64)
@@ -70,7 +71,7 @@ func (delivery *sbsDelivery) UpdateSbsProduct(c *gin.Context) {
 		}
 	}
 
-	data := delivery.SbsUsecase.UpdateSbsProduct(c, sku, qty, seq, hppConvert, priceConvert, adminFeeConvert, ongkirFeeConvert, taxConvert)
+	data := delivery.SbsUsecase.UpdateSbsProduct(c, sku, qty, seq, hppConvert, priceConvert, adminFeeConvert, ongkirFeeConvert, taxConvert, isDeleted)
 
 	if data.StatusCode >= 400 && data.StatusCode != http.StatusNotFound {
 		c.JSON(data.StatusCode, data)
