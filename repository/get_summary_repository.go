@@ -20,7 +20,9 @@ func (repository *sbsRepository) GetSummarySo(c context.Context, monthYear strin
 		Table(entity.TABLE_SALES_ORDER).
 		Select("SUM(clean_margin) as clean_margin").
 		Where("MONTH(order_date) = ?", month).
-		Where("YEAR(order_date) = ?", year)
+		Where("YEAR(order_date) = ?", year).
+		Where("is_payment = ?", true).
+		Where("is_cancel = ?", false)
 
 	err := dbTemp.Find(&results).Error
 

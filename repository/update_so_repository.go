@@ -36,6 +36,21 @@ func (repository *sbsRepository) UpdateSoCancel(c context.Context, invoice_no st
 	return nil
 }
 
+func (repository *sbsRepository) CancelSo(c context.Context, invoice_no string) error {
+
+	if c.Err() == context.DeadlineExceeded {
+		return c.Err()
+	}
+
+	var results entity.SbsSalesOrder
+	err := repository.mysqlConn.Model(&results).Where("invoice_no = ?", invoice_no).Update("is_cancel", true)
+	if err != nil {
+		return err.Error
+	}
+
+	return nil
+}
+
 func (repository *sbsRepository) UpdateSoFlag(c context.Context, InvoiceNo []string) error {
 
 	if c.Err() == context.DeadlineExceeded {

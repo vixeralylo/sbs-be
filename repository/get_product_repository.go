@@ -6,7 +6,7 @@ import (
 	"sbs-be/model/entity"
 )
 
-func (repository *sbsRepository) GetSbsProduct(c context.Context) ([]entity.SbsProduct, error) {
+func (repository *sbsRepository) GetSbsProduct(c context.Context, showDeleted bool) ([]entity.SbsProduct, error) {
 
 	if c.Err() == context.DeadlineExceeded {
 		return nil, c.Err()
@@ -14,7 +14,16 @@ func (repository *sbsRepository) GetSbsProduct(c context.Context) ([]entity.SbsP
 
 	var results []entity.SbsProduct
 
-	err := repository.mysqlConn.Order("seq asc").Find(&results).Error
+	dbTemp := repository.mysqlConn.Order("seq asc")
+	if showDeleted {
+		// tampilkan produk nonaktif
+		dbTemp = dbTemp.Where("is_deleted = 1")
+	} else {
+		// default: hanya produk aktif
+		dbTemp = dbTemp.Where("is_deleted = 0 OR is_deleted IS NULL")
+	}
+
+	err := dbTemp.Find(&results).Error
 	if err != nil {
 		return nil, err
 	}

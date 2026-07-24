@@ -44,6 +44,9 @@ func (repository *sbsRepository) GetSo(c context.Context, filter dto.RequestSo) 
 		}
 
 		dbTemp = dbTemp.Where("is_payment = ?", isNotPayment)
+	} else {
+		// default: hanya tampilkan yang sudah dibayar (yang belum bayar ada di menu terpisah)
+		dbTemp = dbTemp.Where("is_payment = ?", true)
 	}
 
 	err := dbTemp.Where("is_cancel = ?", false).Find(&results).Error
@@ -84,6 +87,8 @@ func (repository *sbsRepository) GetTotalSoPerMonth(c context.Context, monthYear
 	count := repository.mysqlConn.
 		Where("MONTH(order_date) = ?", month).
 		Where("YEAR(order_date) = ?", year).
+		Where("is_payment = ?", true).
+		Where("is_cancel = ?", false).
 		Find(&results).
 		Group("invoice_no").RowsAffected
 

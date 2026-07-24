@@ -26,6 +26,12 @@ func (usecase *sbsUsecase) UpdateSo(c context.Context, invoice_no string, status
 			return response.BuildInternalErrorResponse(constant.ERROR_CODE_DATABASE_ERROR, constant.RESPONSE_CODE_INTERNAL_ERROR, constant.RESPONSE_MESSAGE_DATABASE_ERROR, err.Error())
 		}
 
+		// invoice tidak ditemukan
+		if len(result) == 0 {
+			return response.BuildDataNotFoundResponse()
+		}
+
+		// order yang sudah dibayar tidak boleh dibatalkan
 		if result[0].IsPayment {
 			return response.BuildDataNotFoundResponse()
 		}
@@ -42,7 +48,7 @@ func (usecase *sbsUsecase) UpdateSo(c context.Context, invoice_no string, status
 			}
 		}
 
-		errUpdateSo := usecase.SbsRepository.UpdateSoCancel(c, invoice_no)
+		errUpdateSo := usecase.SbsRepository.CancelSo(c, invoice_no)
 		if errUpdateSo != nil && errUpdateSo.Error() == config.ErrRecordNotFound.Error() {
 			return response.BuildDataNotFoundResponse()
 		} else if errUpdateSo != nil {

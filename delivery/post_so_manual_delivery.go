@@ -32,6 +32,7 @@ func (delivery *sbsDelivery) PostSoManual(c *gin.Context) {
 		Price:         price,
 		TotalPrice:    total_price,
 		SoNumber:      invoice_no,
+		InvoiceNo:     invoice_no,
 	}
 
 	data := delivery.SbsUsecase.PostSoManual(c, req)

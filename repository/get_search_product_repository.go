@@ -14,7 +14,7 @@ func (repository *sbsRepository) GetSearchProduct(c context.Context, str string)
 
 	var results []entity.SbsProduct
 
-	err := repository.mysqlConn.Where("product_name like ?", "%"+str+"%").Find(&results).Error
+	err := repository.mysqlConn.Where("product_name like ?", "%"+str+"%").Where("is_deleted = 0 OR is_deleted IS NULL").Find(&results).Error
 	if err != nil {
 		return nil, err
 	}
