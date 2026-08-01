@@ -55,6 +55,10 @@ type RequestAddProduct struct {
 	Seq         string `json:"seq"`
 }
 
+type RequestSearch struct {
+	Text string `json:"text"`
+}
+
 type RequestCost struct {
 	CostType      string `json:"cost_type"`
 	CostName      string `json:"cost_name"`
