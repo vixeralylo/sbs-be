@@ -28,6 +28,7 @@ type SbsRepository interface {
 	PostProduct(c context.Context, product entity.SbsProduct) error
 	PostPo(c context.Context, purchasesOrder entity.SbsPurchaseOrder) error
 	GetSearchProduct(c context.Context, str string) ([]entity.SbsProduct, error)
+	SearchProduct(c context.Context, text string) ([]entity.SbsProduct, error)
 	UpdatePo(c context.Context, poNo string) error
 	GetCost(c context.Context, filter dto.RequestCost) ([]entity.SbsCost, error)
 	PostCost(c context.Context, filter entity.SbsCost) error

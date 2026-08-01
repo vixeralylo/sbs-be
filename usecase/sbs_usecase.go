@@ -18,6 +18,7 @@ type SbsUsecase interface {
 	PostPo(c context.Context, req []dto.RequestPo) *response.ResponseContainer
 	UpdateSo(c context.Context, invoiceNo string, status string) *response.ResponseContainer
 	GetSearchProduct(c context.Context, str string) *response.ResponseContainer
+	SearchProduct(c context.Context, text string) *response.ResponseContainer
 	DeleteSo(c context.Context, invoiceNo string) *response.ResponseContainer
 	UpdatePo(c context.Context, poNo string, status string) *response.ResponseContainer
 	DeletePo(c context.Context, poNo string, sku string) *response.ResponseContainer
